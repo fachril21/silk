@@ -11,7 +11,7 @@ $(document).ready(function() {
         if(x < max_fields){ 
             x++; //input field increment
  //add input field
-            $(wrapper).append('<div><input id="skill" type="text" class="form-control mt-1" name="skill[]" required autocomplete="skill" /> <a href="javascript:void(0);" class="remove_field">Remove</a></div>');
+            $(wrapper).append('<div><input id="skill" type="text" class="form-control mt-2" name="skill[]" required autocomplete="skill" /> <a href="javascript:void(0);" class="remove_field">Remove</a></div>');
         }
     });
  
