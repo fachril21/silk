@@ -50,7 +50,8 @@ class RegisterController extends Controller
         $this->middleware('guest');
         $this->endpoint = new EasyRdf_Sparql_Client(
             'http://localhost:3030/silk/query',
-            'http://localhost:3030/silk/update');
+            'http://localhost:3030/silk/update'
+        );
     }
 
     /**
@@ -79,75 +80,195 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        $username = $data['username'];
         $name = $data['name'];
         $phone = $data['phone'];
         $email = $data['email'];
-        $skill = $data['skill'];
 
-        global $endpoint;
-        $obj = new RegisterController();
-        $result = $obj->endpoint->update(
-            "
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-            PREFIX silk: <http://www.silk.com#>
-            
-            INSERT DATA
-                { 
-                silk:$name rdf:type silk:Pelamar .
-                silk:$name silk:name '$name' .
-                silk:$name silk:phone '$phone' .
-                silk:$name silk:email '$email' .      
-                }     
-            "
-        );
 
-        foreach($skill as $field_value){
-            $skillString = var_dump($skill);
-            $checkSkill = $obj->endpoint->query(
+        $status = $data['status'];
+
+
+
+        if ($status == 'Pelamar') {
+
+            $birth_date = $data['birth_date'];
+            $skill = $data['skill'];
+            $major_name = $data['major'];
+            $major = str_replace(' ', '_', $major_name);
+            $biography = $data['biography'];
+            $achievment = $data['achievment'];
+            $gender = $data['gender'];
+
+            $user = User::create([
+                'status' => $data['status'],
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'birth_date' => $data['birth_date'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+            if (isset($data['avatar'])) {
+                $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+            }
+
+            global $endpoint;
+            $obj = new RegisterController();
+            $result = $obj->endpoint->update(
+                "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+                
+                INSERT DATA
+                    { 
+                    silk:$username rdf:type silk:Pelamar .
+                    silk:$username silk:name '$name' .
+                    silk:$username silk:phone '$phone' .
+                    silk:$username silk:email '$email' .      
+                    silk:$username silk:gender '$gender' .      
+                    silk:$username silk:birth_date '$birth_date' .      
+                    silk:$username silk:biography '$biography' .      
+                    }     
+                "
+            );
+
+            $checkMajor = $obj->endpoint->query(
                 "
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                 PREFIX silk: <http://www.silk.com#>
 
-                ASK WHERE { FILTER NOT EXISTS { ?skill rdf:type silk:Keahlian . FILTER(?skill=<http://www.silk.com#$skillString>)} }
+                ASK WHERE { FILTER NOT EXISTS { ?major rdf:type silk:Jurusan . FILTER(?skill=<http://www.silk.com#$major>)} }
                 "
             );
 
-            if($checkSkill->isTrue()){
-                $result2 = $obj->endpoint->update(
+            if ($checkMajor->isTrue()) {
+                $resultMajor = $obj->endpoint->update(
                     "
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX silk: <http://www.silk.com#>
-                    
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+    
                         INSERT DATA
-                            { 
-                            silk:$field_value rdf:type silk:Keahlian .   
-                            silk:$name silk:menguasai silk:$field_value .   
-                            }
+                        { 
+                            silk:$major rdf:type silk:Jurusan .   
+                            silk:$major silk:major_name '$major_name' .
+                            silk:$username silk:lulusan silk:$major .   
+                        }
+    
                     "
                 );
-            }else{
-                $result2 = $obj->endpoint->update(
+            } else {
+                $resultMajor = $obj->endpoint->update(
                     "
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    PREFIX silk: <http://www.silk.com#>
-                    
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+    
                         INSERT DATA
-                            { 
-                            silk:$name silk:menguasai silk:$field_value .   
-                            }
+                        {  
+                            silk:$username silk:lulusan silk:$major .   
+                        }
+    
                     "
                 );
             }
 
-            
+
+
+            foreach ($skill as $field_value) {
+                $skillString = var_dump($skill);
+                $skillValue = str_replace(' ', '_', $field_value);
+                $checkSkill = $obj->endpoint->query(
+                    "
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX silk: <http://www.silk.com#>
+    
+                    ASK WHERE { FILTER NOT EXISTS { ?skill rdf:type silk:Keahlian . FILTER(?skill=<http://www.silk.com#$skillValue>)} }
+                    "
+                );
+
+                if ($checkSkill->isTrue()) {
+                    $result2 = $obj->endpoint->update(
+                        "
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+                        
+                            INSERT DATA
+                                { 
+                                silk:$skillValue rdf:type silk:Keahlian .   
+                                silk:$skillValue silk:name '$field_value' .
+                                silk:$username silk:menguasai silk:$skillValue .   
+                                }
+                        "
+                    );
+                } else {
+                    $result2 = $obj->endpoint->update(
+                        "
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+                        
+                            INSERT DATA
+                                { 
+                                silk:$username silk:menguasai silk:$skillValue .   
+                                }
+                        "
+                    );
+                }
+                $skillString = null;
+            }
+
+            foreach ($achievment as $field_value) {
+                $achievmentString = var_dump($achievment);
+
+                $result2 = $obj->endpoint->update(
+                    "
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+                        
+                            INSERT DATA
+                                { 
+                                silk:$username silk:memiliki_pencapaian '$field_value' .   
+                                }
+                        "
+                );
+
+                $achievmentString = null;
+            }
+        } elseif ($status == 'Perusahaan') {
+
+            $information = $data['information'];
+
+            $user = User::create([
+                'status' => $data['status'],
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+            if (isset($data['avatar'])) {
+                $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+            }
+
+            global $endpoint;
+            $obj = new RegisterController();
+            $result = $obj->endpoint->update(
+                "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+                
+                INSERT DATA
+                    { 
+                    silk:$username rdf:type silk:Perusahaan .
+                    silk:$username silk:name '$name' .
+                    silk:$username silk:phone '$phone' .
+                    silk:$username silk:email '$email' .    
+                    silk:$username silk:information '$information' .  
+                         
+                    }     
+                "
+            );
         }
 
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            // 'birth_date' => $data['date'],
-            'password' => Hash::make($data['password']),
-        ]);
+
+
+        return $user;
     }
 }
