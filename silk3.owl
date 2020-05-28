@@ -1,0 +1,287 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.silk.com/"
+     xml:base="http://www.silk.com/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:www="http://www.silk.com#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.silk.com"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.silk.com#lulusan -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#lulusan">
+        <rdfs:domain rdf:resource="http://www.silk.com#Pelamar"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Jurusan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#membutuhkan -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#membutuhkan">
+        <rdfs:domain rdf:resource="http://www.silk.com#Lowongan_Kerja"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Jurusan"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Keahlian"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#memiliki -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#memiliki">
+        <rdfs:domain rdf:resource="http://www.silk.com#Perusahaan"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Jabatan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#menawarkan -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#menawarkan">
+        <rdfs:domain rdf:resource="http://www.silk.com#Lowongan_Kerja"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Jabatan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#mendaftar -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#mendaftar">
+        <rdfs:domain rdf:resource="http://www.silk.com#Pelamar"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Lowongan_Kerja"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#mengadakan -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#mengadakan">
+        <rdfs:domain rdf:resource="http://www.silk.com#Perusahaan"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Lowongan_Kerja"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#mengambil -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#mengambil">
+        <rdfs:domain rdf:resource="http://www.silk.com#Pelamar"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Jurusan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#menguasai -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#menguasai">
+        <rdfs:domain rdf:resource="http://www.silk.com#Pelamar"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Keahlian"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.silk.com#merekrut -->
+
+    <owl:ObjectProperty rdf:about="http://www.silk.com#merekrut">
+        <rdfs:domain rdf:resource="http://www.silk.com#Perusahaan"/>
+        <rdfs:range rdf:resource="http://www.silk.com#Pelamar"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.silk.com#batas_usia -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#batas_usia"/>
+    
+
+
+    <!-- http://www.silk.com#biografi -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#biografi"/>
+    
+
+
+    <!-- http://www.silk.com#email -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#email"/>
+    
+
+
+    <!-- http://www.silk.com#gaji_jabatan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#gaji_jabatan"/>
+    
+
+
+    <!-- http://www.silk.com#informasi_pekerjaan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#informasi_pekerjaan"/>
+    
+
+
+    <!-- http://www.silk.com#jabatan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#jabatan"/>
+    
+
+
+    <!-- http://www.silk.com#jenis_kelamin -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#jenis_kelamin"/>
+    
+
+
+    <!-- http://www.silk.com#nama -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#nama"/>
+    
+
+
+    <!-- http://www.silk.com#nama_jurusan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#nama_jurusan">
+        <rdfs:subPropertyOf rdf:resource="http://www.silk.com#nama"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.silk.com#nama_pelamar -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#nama_pelamar">
+        <rdfs:subPropertyOf rdf:resource="http://www.silk.com#nama"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.silk.com#nama_perusahaan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#nama_perusahaan">
+        <rdfs:subPropertyOf rdf:resource="http://www.silk.com#nama"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.silk.com#no_telepon -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#no_telepon"/>
+    
+
+
+    <!-- http://www.silk.com#no_telepon_pelamar -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#no_telepon_pelamar">
+        <rdfs:subPropertyOf rdf:resource="http://www.silk.com#no_telepon"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.silk.com#no_telepon_perusahaan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#no_telepon_perusahaan">
+        <rdfs:subPropertyOf rdf:resource="http://www.silk.com#no_telepon"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.silk.com#pencapaian -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#pencapaian"/>
+    
+
+
+    <!-- http://www.silk.com#tanggal_lahir -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#tanggal_lahir"/>
+    
+
+
+    <!-- http://www.silk.com#username -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#username"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.silk.com#Jabatan -->
+
+    <owl:Class rdf:about="http://www.silk.com#Jabatan"/>
+    
+
+
+    <!-- http://www.silk.com#Jurusan -->
+
+    <owl:Class rdf:about="http://www.silk.com#Jurusan"/>
+    
+
+
+    <!-- http://www.silk.com#Keahlian -->
+
+    <owl:Class rdf:about="http://www.silk.com#Keahlian"/>
+    
+
+
+    <!-- http://www.silk.com#Lowongan_Kerja -->
+
+    <owl:Class rdf:about="http://www.silk.com#Lowongan_Kerja"/>
+    
+
+
+    <!-- http://www.silk.com#Pelamar -->
+
+    <owl:Class rdf:about="http://www.silk.com#Pelamar">
+        <rdfs:subClassOf rdf:resource="http://www.silk.com#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.silk.com#Person -->
+
+    <owl:Class rdf:about="http://www.silk.com#Person"/>
+    
+
+
+    <!-- http://www.silk.com#Perusahaan -->
+
+    <owl:Class rdf:about="http://www.silk.com#Perusahaan"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

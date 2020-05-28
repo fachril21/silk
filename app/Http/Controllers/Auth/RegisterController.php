@@ -122,12 +122,13 @@ class RegisterController extends Controller
                 INSERT DATA
                     { 
                     silk:$username rdf:type silk:Pelamar .
-                    silk:$username silk:name '$name' .
-                    silk:$username silk:phone '$phone' .
+                    silk:$username silk:nama_pelamar '$name' .
+                    silk:$username silk:username '$username' .
+                    silk:$username silk:no_telepon_pelamar '$phone' .
                     silk:$username silk:email '$email' .      
-                    silk:$username silk:gender '$gender' .      
-                    silk:$username silk:birth_date '$birth_date' .      
-                    silk:$username silk:biography '$biography' .      
+                    silk:$username silk:jenis_kelamin '$gender' .      
+                    silk:$username silk:tanggal_lahir '$birth_date' .      
+                    silk:$username silk:biografi '$biography' .      
                     }     
                 "
             );
@@ -225,7 +226,7 @@ class RegisterController extends Controller
                         
                             INSERT DATA
                                 { 
-                                silk:$username silk:memiliki_pencapaian '$field_value' .   
+                                silk:$username silk:pencapaian '$field_value' .   
                                 }
                         "
                 );

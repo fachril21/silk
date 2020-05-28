@@ -20,3 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('userProfile', function () {
+    return view('profile');
+});
+Route::get('/profile/{username}','UserProfileController@userData')->name('profile');
+Route::get('/profile/edit/{id}','UserProfileController@sendUserData')->name('profile.edit');
+Route::post('/profile/update','UserProfileController@update');
+
+// Route::get('userProfile/{user}',  ['as' => 'users.edit', 'uses' => 'UserProfileController@sendUserData']);
+// Route::patch('userProfile/{user}/update',  ['as' => 'users.update', 'uses' => 'UpdateProfileController@updateUserData']);
