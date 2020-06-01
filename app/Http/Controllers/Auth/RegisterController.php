@@ -258,6 +258,7 @@ class RegisterController extends Controller
                 INSERT DATA
                     { 
                     silk:$username rdf:type silk:Perusahaan .
+                    silk:$username silk:username '$username' .
                     silk:$username silk:name '$name' .
                     silk:$username silk:phone '$phone' .
                     silk:$username silk:email '$email' .    

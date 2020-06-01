@@ -7,6 +7,9 @@ use App\User;
 use EasyRdf_Sparql_Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdatePasswordRequest;
+use Illuminate\Support\Facades\Hash;
+use Alert;
 
 
 class UserProfileController extends Controller
@@ -304,5 +307,60 @@ class UserProfileController extends Controller
         $user->save();
 
         return redirect()->route('profile', ['username' => $user->username]);
+    }
+
+    public function changeEmail(Request $request)
+    {
+        $username = Auth::user()->username;
+        $userData = $this->userData($username);
+        $oldEmail = $userData->userData->email;
+
+        $newEmail = $request->email;
+
+        $user = Auth::user();
+        $user->email = $newEmail;
+
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('profile', ['username' => $user->username])
+                ->withErrors($validator)
+                ->withInput(['tab' => 'v-pills-change-email']);
+        }
+
+        global $endpoint;
+        $obj = new UserProfileController();
+        $result = $obj->endpoint->update(
+            "
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX silk: <http://www.silk.com#>
+
+            DELETE DATA{
+                <http://www.silk.com#$username> silk:email '$oldEmail' .
+            };
+
+            INSERT DATA{
+                <http://www.silk.com#$username> silk:email '$newEmail' .
+            }
+            "
+        );
+
+        $user->save();
+        Alert::success('Sukses', 'Email berhasil diganti');
+
+        return redirect()->route('profile', ['username' => $user->username]);
+    }
+
+    public function changePassword(UpdatePasswordRequest $request)
+    {
+
+        $request->user()->update([
+            'password' => Hash::make($request->get('password'))
+        ]);
+
+        return redirect()->route('profile', ['username' => $request->user()->username])->withInput(['tab' => 'v-pills-change-password']);
     }
 }
