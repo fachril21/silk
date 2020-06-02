@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container pt-4">
 
     <div class="row">
         <div class="col-3">
@@ -84,7 +84,15 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4 ">
-                                                <label for="lulusan" class="col-md col-form-label text-md-left">{{ __('Lulusan') }}</label>
+                                                <label for="universitas" class="col-md col-form-label text-md-left">{{ __('Lulusan Universitas') }}</label>
+                                            </div>
+                                            <div class="col-sm-8 ">
+                                                <label for="universitas" class="col-md col-form-label text-md-left"><b>{{$userData->universitas}}</b></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4 ">
+                                                <label for="lulusan" class="col-md col-form-label text-md-left">{{ __('Jurusan') }}</label>
                                             </div>
                                             <div class="col-sm-8 ">
                                                 <label for="lulusan" class="col-md col-form-label text-md-left"><b>{{$userData->jurusan}}</b></label>
@@ -231,7 +239,8 @@
 <script>
     //redirect to specific tab
     $(document).ready(function() {
-        $('#v-pills-tab a[href="#{{ old('tab') }}"]').tab('show')
+        $('#v-pills-tab a[href="#{{ old('
+            tab ') }}"]').tab('show')
     });
 </script>
 @endsection

@@ -11,7 +11,7 @@
             @if (Auth::user()->status == "Pelamar")
             <ul class="list-unstyled components mb-5">
                 <li class="active">
-                    <a href="#"><span class="fa fa-file mr-3"></span> Daftar Lowongan Kerja</a>
+                    <a href="#" style="font-size: 20px;"><span class="fa fa-file mr-3"></span> Daftar Lowongan Kerja</a>
                 </li>
                 <li>
                     <a href="#"><span class="fa fa-tasks mr-3"></span> Progres Tes Rekrutmen</a>
@@ -26,10 +26,10 @@
                     <a href="#"><span class="fa fa-tasks mr-3"></span> Progres Tes Rekrutmen</a>
                 </li>
             </ul>
-            @elseif (Auth::user()->status == "Upkk")
+            @elseif (Auth::user()->status == "UPKK")
             <ul class="list-unstyled components mb-5">
                 <li class="active">
-                    <a href="#"><span class="fa fa-file mr-3"></span> Daftar Kerjasama Rekrutmen</a>
+                    <a href="{{route('kerjasamaRekrutmenUpkk')}}"><span class="fa fa-file mr-3"></span> Daftar Kerjasama Rekrutmen</a>
                 </li>
                 <li>
                     <a href="#"><span class="fa fa-tasks mr-3"></span> Progres Tes Rekrutmen</a>

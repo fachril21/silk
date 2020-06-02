@@ -12,10 +12,6 @@ class PengajuanKerjasama extends Model
         'batas_usia', 
         'jenis_kelamin_laki_laki', 
         'jenis_kelamin_perempuan', 
-        'lulusan_pelamar',
-        'posisi',
-        'informasi_posisi',
-        'gaji_ditawarkan',
         'status',
     ];
 }

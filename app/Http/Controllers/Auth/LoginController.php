@@ -43,7 +43,7 @@ class LoginController extends Controller
     protected function authenticated(\Illuminate\Http\Request $request, $user)
     {
         if($user->status == "Perusahaan"){
-            return redirect('/kerjasamaRekrutmen');
+            return redirect()->route('kerjasamaRekrutmen', ['id' => $user->id]);
         }
         return redirect('/home');
     }

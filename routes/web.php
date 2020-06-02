@@ -45,6 +45,13 @@ Route::get('/kerjasamaRekrutmen/{id}', 'PengajuanKerjasamaController@showKerjaSa
 Route::get('/pengajuanKerjasama', 'PengajuanKerjasamaController@index')->name('pengajuanKerjasama');
 Route::post('/pengajuanKerjasama/upload', 'PengajuanKerjasamaController@ajukanKerjasama');
 
+Route::get('/detailKerjasama/{id}', 'DetailKerjasamaController@index')->name('detailKerjasama');
+
+
+Route::get('/kerjasamaRekrutmen', 'PengajuanKerjasamaController@showKerjaSamaUpkk')->name('kerjasamaRekrutmenUpkk');
+Route::post('/konfirmasiKerjasama/confirm/{id}', 'PengajuanKerjasamaController@terimaKerjasama')->name('terimaKerjasama');
+Route::post('/konfirmasiKerjasama/cancel/{id}', 'PengajuanKerjasamaController@tolakKerjasama')->name('tolakKerjasama');
+
 
 // Route::get('userProfile/{user}',  ['as' => 'users.edit', 'uses' => 'UserProfileController@sendUserData']);
 // Route::patch('userProfile/{user}/update',  ['as' => 'users.update', 'uses' => 'UpdateProfileController@updateUserData']);

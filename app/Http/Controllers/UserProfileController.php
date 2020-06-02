@@ -38,10 +38,10 @@ class UserProfileController extends Controller
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX silk: <http://www.silk.com#>
 
-            SELECT ?username ?nama ?biografi ?no_telepon ?email ?tanggal_lahir ?jurusan ?jenis_kelamin
+            SELECT ?username ?nama ?biografi ?no_telepon ?email ?tanggal_lahir ?jurusan ?universitas ?jenis_kelamin
             WHERE {?instance rdf:type silk:Pelamar . ?instance silk:username ?username . ?instance silk:nama_pelamar ?nama . ?instance silk:biografi ?biografi .
-                ?instance silk:no_telepon_pelamar ?no_telepon . ?instance silk:email ?email . ?instance silk:tanggal_lahir ?tanggal_lahir . ?instance silk:lulusan ?jurusanInstance . ?jurusanInstance silk:major_name ?jurusan .
-                ?instance silk:jenis_kelamin ?jenis_kelamin
+                ?instance silk:no_telepon_pelamar ?no_telepon . ?instance silk:email ?email . ?instance silk:tanggal_lahir ?tanggal_lahir . ?instance silk:mengambil ?jurusanInstance . ?jurusanInstance silk:nama_jurusan ?jurusan .
+                ?instance silk:lulusan_dari ?universitasInstance . ?universitasInstance silk:nama ?universitas . ?instance silk:jenis_kelamin ?jenis_kelamin
 	            FILTER regex(?username, '$username')}
             "
         );
@@ -52,7 +52,7 @@ class UserProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             SELECT ?skill
-            WHERE {?instance rdf:type silk:Pelamar . ?instance silk:username ?username . ?instance silk:menguasai ?skillInstance . ?skillInstance silk:name ?skill .
+            WHERE {?instance rdf:type silk:Pelamar . ?instance silk:username ?username . ?instance silk:menguasai ?skillInstance . ?skillInstance silk:nama ?skill .
 	            FILTER regex(?username, '$username')}
             "
         );
@@ -76,6 +76,7 @@ class UserProfileController extends Controller
                 'email' => $row->email,
                 'tanggal_lahir' => $row->tanggal_lahir,
                 'jurusan' => $row->jurusan,
+                'universitas' => $row->universitas,
                 'jenis_kelamin' => $row->jenis_kelamin
             ];
         }
@@ -95,10 +96,10 @@ class UserProfileController extends Controller
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX silk: <http://www.silk.com#>
 
-            SELECT ?username ?nama ?biografi ?no_telepon ?email ?tanggal_lahir ?jurusan ?jenis_kelamin
+            SELECT ?username ?nama ?biografi ?no_telepon ?email ?tanggal_lahir ?jurusan ?universitas ?jenis_kelamin
             WHERE {?instance rdf:type silk:Pelamar . ?instance silk:username ?username . ?instance silk:nama_pelamar ?nama . ?instance silk:biografi ?biografi .
-                ?instance silk:no_telepon_pelamar ?no_telepon . ?instance silk:email ?email . ?instance silk:tanggal_lahir ?tanggal_lahir . ?instance silk:lulusan ?jurusanInstance . ?jurusanInstance silk:major_name ?jurusan .
-                ?instance silk:jenis_kelamin ?jenis_kelamin
+                ?instance silk:no_telepon_pelamar ?no_telepon . ?instance silk:email ?email . ?instance silk:tanggal_lahir ?tanggal_lahir . ?instance silk:mengambil ?jurusanInstance . ?jurusanInstance silk:nama_jurusan ?jurusan .
+                ?instance silk:lulusan_dari ?universitasInstance . ?universitasInstance silk:nama ?universitas . ?instance silk:jenis_kelamin ?jenis_kelamin
 	            FILTER regex(?username, '$username')}
             "
         );
@@ -133,6 +134,7 @@ class UserProfileController extends Controller
                 'email' => $row->email,
                 'tanggal_lahir' => $row->tanggal_lahir,
                 'jurusan' => $row->jurusan,
+                'universitas' => $row->universitas,
                 'jenis_kelamin' => $row->jenis_kelamin
             ];
         }
@@ -149,6 +151,7 @@ class UserProfileController extends Controller
         $oldPhone = $userData->userData->no_telepon;
         $oldBiografi = $userData->userData->biografi;
         $oldMajor = $userData->userData->jurusan;
+        $oldUniversitas = $userData->userData->universitas;
         $oldSkill = $userData->userDataSkill;
         $oldAchievment = $userData->userDataPencapaian;
 
@@ -156,6 +159,7 @@ class UserProfileController extends Controller
         $newPhone = $request->newPhone;
         $newBiografi = $request->newBiography;
         $newMajor = $request->newMajor;
+        $newUniversitas = $request->newUniversitas;
         $newSkill = $request->newSkill;
         $newAchievment = $request->newAchievment;
 
@@ -184,14 +188,16 @@ class UserProfileController extends Controller
                 <http://www.silk.com#$username> silk:nama_pelamar '$oldName' .
                 <http://www.silk.com#$username> silk:no_telepon_pelamar '$oldPhone' .
                 <http://www.silk.com#$username> silk:biografi '$oldBiografi' .
-                <http://www.silk.com#$username> silk:lulusan <http://www.silk.com#$oldMajor> .
+                <http://www.silk.com#$username> silk:mengambil <http://www.silk.com#$oldMajor> .
+                <http://www.silk.com#$username> silk:lulusan_dari <http://www.silk.com#$oldUniversitas> .
             };
 
             INSERT DATA{
                 <http://www.silk.com#$username> silk:nama_pelamar '$newName' .
                 <http://www.silk.com#$username> silk:no_telepon_pelamar '$newPhone' .
                 <http://www.silk.com#$username> silk:biografi '$newBiografi' .
-                <http://www.silk.com#$username> silk:lulusan <http://www.silk.com#$newMajor> .
+                <http://www.silk.com#$username> silk:mengambil <http://www.silk.com#$newMajor> .
+                <http://www.silk.com#$username> silk:lulusan_dari <http://www.silk.com#$newUniversitas> .
             }
             "
         );

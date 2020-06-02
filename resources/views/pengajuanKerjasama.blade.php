@@ -93,12 +93,40 @@
                                 </div>
                                 <div class="form-group row mt-1">
                                     <div class="col-sm-4 ">
-                                        <label for="lulusanPelamar" class="col-md col-form-label text-md-left">{{ __('Lulusan yang dibutuhkan') }}</label>
+                                        <label for="lulusanPelamar" class="col-md col-form-label text-md-left">{{ __('Jurusan yang dibutuhkan') }}</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="wrapper_lulusanPelamar">
+                                            <div>
+                                                <input id="lulusanPelamar" list="dataJurusan" type="text" class="form-control @error('lulusanPelamar') is-invalid @enderror" name="lulusanPelamar[]" value="{{ old('lulusanPelamar') }}" required autocomplete="lulusanPelamar" />
+                                                <datalist id="dataJurusan">
+                                                    @foreach($dataJurusan as $row)
+                                                    <option value="{{$row->jurusan}}">
+                                                        @endforeach
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                        <p><button class="add_fields_lulusanPelamar">Add More Fields</button></p>
+                                    </div>
+
+                                    @error('skill')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group row mt-1">
+                                    <div class="col-sm-4 ">
+                                        <label for="posisi" class="col-md col-form-label text-md-left">{{ __('Posisi yang ditawarkan') }}</label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <input id="lulusanPelamar" type="text" class="form-control @error('lulusanPelamar') is-invalid @enderror" name="lulusanPelamar" required autocomplete="lulusanPelamar">
-
-                                        @error('lulusanPelamar')
+                                        <input id="posisi" type="text" list="dataJabatan" class="form-control @error('posisi') is-invalid @enderror" name="posisi" required autocomplete="posisi">
+                                        <datalist id="dataJabatan">
+                                            @foreach($dataJabatan as $row)
+                                            <option value="{{$row->jabatan}}"></option>
+                                            @endforeach
+                                        </datalist>
+                                        @error('posisi')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -107,17 +135,27 @@
                                 </div>
                                 <div class="form-group row mt-1">
                                     <div class="col-sm-4 ">
-                                        <label for="posisi" class="col-md col-form-label text-md-left">{{ __('Posisi yang ditawarkan') }}</label>
+                                        <label for="skill" class="col-md col-form-label text-md-left">{{ __('Keahlian yang dibutuhkan') }}</label>
                                     </div>
-                                    <div class="col-sm-8 ">
-                                        <input id="posisi" type="text" class="form-control @error('posisi') is-invalid @enderror" name="posisi" required autocomplete="posisi">
+                                    <div class="col-md-8">
+                                        <div class="wrapper_skillPengajuan">
+                                            <div>
+                                                <input id="skill" list="dataKeahlian" type="text" class="form-control @error('skill') is-invalid @enderror" name="skill[]" value="{{ old('skill') }}" required autocomplete="skill" />
+                                                <datalist id="dataKeahlian">
+                                                    @foreach($dataKeahlian as $row)
+                                                    <option value="{{$row->skill}}">
+                                                        @endforeach
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                        <p><button class="add_fields_skillPengajuan">Add More Fields</button></p>
+                                    </div>
 
-                                        @error('posisi')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    @error('skill')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group row mt-1">
                                     <div class="col-sm-4 ">

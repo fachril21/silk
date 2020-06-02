@@ -71,6 +71,48 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function showRegistrationForm()
+    {
+        global $endpoint;
+        $obj = new RegisterController();
+        $dataUniversitas = $obj->endpoint->query(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                SELECT ?universitas
+                WHERE {
+                    ?instanceUniversitas rdf:type silk:Universitas . ?instanceUniversitas silk:nama ?universitas .
+                }
+            "
+        );
+        $dataJurusan = $obj->endpoint->query(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                SELECT ?jurusan
+                WHERE {
+                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceJurusan silk:nama_jurusan ?jurusan .
+                }
+            "
+        );
+        $dataKeahlian = $obj->endpoint->query(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                SELECT ?skill
+                WHERE {
+                    ?instanceKeahlian rdf:type silk:Keahlian . ?instanceKeahlian silk:nama ?skill .
+                }
+            "
+        );
+
+
+        return view("auth.register", compact("dataUniversitas", "dataJurusan", "dataKeahlian"));
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -96,6 +138,8 @@ class RegisterController extends Controller
             $skill = $data['skill'];
             $major_name = $data['major'];
             $major = str_replace(' ', '_', $major_name);
+            $universitas_name = $data['universitas'];
+            $universitas = str_replace(' ', '_', $universitas_name);
             $biography = $data['biography'];
             $achievment = $data['achievment'];
             $gender = $data['gender'];
@@ -133,6 +177,45 @@ class RegisterController extends Controller
                 "
             );
 
+            $checkUniversitas = $obj->endpoint->query(
+                "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                ASK WHERE { FILTER NOT EXISTS { ?universitas rdf:type silk:Universitas . FILTER(?skill=<http://www.silk.com#$universitas>)} }
+                "
+            );
+
+            if ($checkUniversitas->isTrue()) {
+                $resultMajor = $obj->endpoint->update(
+                    "
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+    
+                        INSERT DATA
+                        { 
+                            silk:$universitas rdf:type silk:Universitas .   
+                            silk:$universitas silk:nama '$universitas_name' .
+                            silk:$username silk:lulusan_dari silk:$universitas .   
+                        }
+    
+                    "
+                );
+            } else {
+                $resultMajor = $obj->endpoint->update(
+                    "
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        PREFIX silk: <http://www.silk.com#>
+    
+                        INSERT DATA
+                        {  
+                            silk:$username silk:lulusan_dari silk:$universitas .   
+                        }
+    
+                    "
+                );
+            }
+
             $checkMajor = $obj->endpoint->query(
                 "
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -151,8 +234,8 @@ class RegisterController extends Controller
                         INSERT DATA
                         { 
                             silk:$major rdf:type silk:Jurusan .   
-                            silk:$major silk:major_name '$major_name' .
-                            silk:$username silk:lulusan silk:$major .   
+                            silk:$major silk:nama_jurusan '$major_name' .
+                            silk:$username silk:mengambil silk:$major .   
                         }
     
                     "
@@ -165,7 +248,7 @@ class RegisterController extends Controller
     
                         INSERT DATA
                         {  
-                            silk:$username silk:lulusan silk:$major .   
+                            silk:$username silk:mengambil silk:$major .   
                         }
     
                     "
@@ -195,7 +278,7 @@ class RegisterController extends Controller
                             INSERT DATA
                                 { 
                                 silk:$skillValue rdf:type silk:Keahlian .   
-                                silk:$skillValue silk:name '$field_value' .
+                                silk:$skillValue silk:nama '$field_value' .
                                 silk:$username silk:menguasai silk:$skillValue .   
                                 }
                         "
@@ -259,14 +342,25 @@ class RegisterController extends Controller
                     { 
                     silk:$username rdf:type silk:Perusahaan .
                     silk:$username silk:username '$username' .
-                    silk:$username silk:name '$name' .
-                    silk:$username silk:phone '$phone' .
+                    silk:$username silk:nama_perusahaan '$name' .
+                    silk:$username silk:no_telepon_perusahaan '$phone' .
                     silk:$username silk:email '$email' .    
-                    silk:$username silk:information '$information' .  
+                    silk:$username silk:informasi_perusahaan '$information' .  
                          
                     }     
                 "
             );
+        } elseif ($status == 'UPKK') {
+            $user = User::create([
+                'status' => $data['status'],
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+            if (isset($data['avatar'])) {
+                $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+            }
         }
 
 

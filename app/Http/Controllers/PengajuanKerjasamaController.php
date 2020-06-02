@@ -22,10 +22,49 @@ class PengajuanKerjasamaController extends Controller
 
     public function index()
     {
-        return view('/pengajuanKerjasama');
+        global $endpoint;
+        $obj = new PengajuanKerjasamaController();
+        $dataJurusan = $obj->endpoint->query(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                SELECT ?jurusan
+                WHERE {
+                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceJurusan silk:nama_jurusan ?jurusan .
+                }
+            "
+        );
+
+        $dataJabatan = $obj->endpoint->query(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                SELECT ?jabatan
+                WHERE {
+                    ?instanceJabatan rdf:type silk:Jabatan . ?instanceJabatan silk:nama ?jabatan .
+                }
+            "
+        );
+
+        $dataKeahlian = $obj->endpoint->query(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+
+                SELECT ?skill
+                WHERE {
+                    ?instanceKeahlian rdf:type silk:Keahlian . ?instanceKeahlian silk:nama ?skill .
+                }
+            "
+        );
+
+        return view('/pengajuanKerjasama', compact('dataJurusan', 'dataJabatan', 'dataKeahlian'));
     }
 
-    public function ajukanKerjasama(Request $request){
+    public function ajukanKerjasama(Request $request)
+    {
 
         $pengajuanKerjasama = new PengajuanKerjasama;
         $pengajuanKerjasama->id_user = Auth::user()->id;
@@ -33,36 +72,145 @@ class PengajuanKerjasamaController extends Controller
         $pengajuanKerjasama->judul = $request->judul;
         $pengajuanKerjasama->batas_usia = $request->batasUsia;
 
-        if($request->jenisKelaminLakiLaki == "1"){
+        if ($request->jenisKelaminLakiLaki == "1") {
             $lakiLaki = true;
-        }else{
+        } else {
             $lakiLaki = false;
         }
         $pengajuanKerjasama->jenis_kelamin_laki_laki = $lakiLaki;
-        
-        if($request->jenisKelaminPerempuan == "1"){
+
+        if ($request->jenisKelaminPerempuan == "1") {
             $perempuan = true;
-        }else{
+        } else {
             $perempuan = false;
         }
         $pengajuanKerjasama->jenis_kelamin_perempuan = $perempuan;
-        $pengajuanKerjasama->lulusan_pelamar = $request->lulusanPelamar;
-        $pengajuanKerjasama->posisi = $request->posisi;
-        $pengajuanKerjasama->informasi_posisi = $request->informasiPosisi;
-        $pengajuanKerjasama->gaji_ditawarkan = $request->gajiDitawarkan;
         $pengajuanKerjasama->status = "Diajukan";
 
         $pengajuanKerjasama->save();
 
-        return redirect()->route('kerjasamaRekrutmen');
+        $id_kerjasama = $pengajuanKerjasama->id;
+
+        global $endpoint;
+        $obj = new PengajuanKerjasamaController();
+        $result = $obj->endpoint->update(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+                
+                INSERT DATA
+                    { 
+                    silk:$id_kerjasama rdf:type silk:Lowongan_Kerja .
+                    silk:$id_kerjasama silk:id '$id_kerjasama' .
+                    silk:$id_kerjasama silk:judul '$request->judul' .
+                    silk:$id_kerjasama silk:gaji_jabatan '$request->gajiDitawarkan' .
+                    silk:$id_kerjasama silk:batas_usia '$request->batasUsia' .
+                    silk:$id_kerjasama silk:jabatan '$request->posisi' .
+                    silk:$id_kerjasama silk:informasi_pekerjaan '$request->informasiPosisi' .       
+                    }     
+                "
+        );
+
+        // jenis kelamin
+        if ($request->jenisKelaminLakiLaki == "1") {
+            $result = $obj->endpoint->update(
+                "
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX silk: <http://www.silk.com#>
+                    
+                    INSERT DATA
+                        { 
+                        silk:$id_kerjasama silk:jenis_kelamin 'Laki-laki' .
+                        }     
+                    "
+            );
+        }
+
+        if ($request->jenisKelaminPerempuan == "1") {
+            $result = $obj->endpoint->update(
+                "
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX silk: <http://www.silk.com#>
+                    
+                    INSERT DATA
+                        { 
+                        silk:$id_kerjasama silk:jenis_kelamin 'Perempuan' .
+                        }     
+                    "
+            );
+        }
+
+        // jurusan
+        $jurusan = $request->lulusanPelamar;
+
+        foreach ($jurusan as $row) {
+            $instanceJurusan = str_replace(' ', '_', $row);
+            $result = $obj->endpoint->update(
+                "
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX silk: <http://www.silk.com#>
+                    
+                    INSERT DATA
+                        { 
+                            silk:$id_kerjasama silk:membutuhkan silk:$instanceJurusan .
+                        }     
+                    "
+            );
+        }
+
+        //keahlian
+        $keahlian = $request->skill;
+
+        foreach ($keahlian as $row) {
+            $instanceKeahlian = str_replace(' ', '_', $row);
+            $result = $obj->endpoint->update(
+                "
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX silk: <http://www.silk.com#>
+                    
+                    INSERT DATA
+                        { 
+                            silk:$id_kerjasama silk:membutuhkan silk:$instanceKeahlian .
+                        }     
+                    "
+            );
+        }
+
+        return redirect()->route('kerjasamaRekrutmen', ['id' => Auth::user()->id]);
     }
 
-    public function showKerjaSama($id){
+    public function showKerjaSama($id)
+    {
         $dataPengajuan = DB::table('pengajuan_kerjasamas')
-                            ->where('id_user', $id)
-                            ->get();
+            ->where('id_user', $id)
+            ->get();
         return view('kerjasamaRekrutmen', compact('dataPengajuan'));
     }
 
+    public function showKerjaSamaUpkk()
+    {
+        $dataPengajuan = DB::table('pengajuan_kerjasamas')
+            ->get();
+        return view('kerjasamaRekrutmen', compact('dataPengajuan'));
+    }
 
+    public function tolakKerjasama($id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+        $dataPengajuan->status = "Ditolak";
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
+
+    public function terimaKerjasama($id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+        $dataPengajuan->status = "Diterima";
+        $dataPengajuan->info_status = "Menunggu konfirmasi oleh pihak Perusahaan dari jadwal yang telah diajukan oleh UPKK UB";
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
+    
 }

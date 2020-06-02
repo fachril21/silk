@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Support\Facades\Hash;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UpdatePasswordPerusahaanRequest;
 
 class PerusahaanProfileController extends Controller
@@ -34,8 +34,8 @@ class PerusahaanProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             SELECT ?username ?name ?phone ?email ?information
-            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:name ?name . ?instance silk:phone ?phone .
-                ?instance silk:email ?email . ?instance silk:information ?information .
+            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:nama_perusahaan ?name . ?instance silk:no_telepon_perusahaan ?phone .
+                ?instance silk:email ?email . ?instance silk:informasi_perusahaan ?information .
 	            FILTER regex(?username, '$username')}
             "
         );
@@ -65,8 +65,8 @@ class PerusahaanProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             SELECT ?username ?name ?phone ?email ?information
-            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:name ?name . ?instance silk:phone ?phone .
-                ?instance silk:email ?email . ?instance silk:information ?information .
+            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:nama_perusahaan ?name . ?instance silk:no_telepon_perusahaan ?phone .
+                ?instance silk:email ?email . ?instance silk:informasi_perusahaan ?information .
 	            FILTER regex(?username, '$username')}
             "
         );
@@ -119,16 +119,16 @@ class PerusahaanProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             DELETE DATA{
-                <http://www.silk.com#$username> silk:name '$oldName' .
-                <http://www.silk.com#$username> silk:phone '$oldPhone' .
-                <http://www.silk.com#$username> silk:information '$oldInformasi' .
+                <http://www.silk.com#$username> silk:nama_perusahaan '$oldName' .
+                <http://www.silk.com#$username> silk:no_telepon_perusahaan '$oldPhone' .
+                <http://www.silk.com#$username> silk:informasi_perusahaan '$oldInformasi' .
                 
             };
 
             INSERT DATA{
-                <http://www.silk.com#$username> silk:name '$newName' .
-                <http://www.silk.com#$username> silk:phone '$newPhone' .
-                <http://www.silk.com#$username> silk:information '$newInformasi' .
+                <http://www.silk.com#$username> silk:nama_perusahaan '$newName' .
+                <http://www.silk.com#$username> silk:no_telepon_perusahaan '$newPhone' .
+                <http://www.silk.com#$username> silk:informasi_perusahaan '$newInformasi' .
                 
             }
             "

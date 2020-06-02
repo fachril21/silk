@@ -86,6 +86,20 @@
                             </div>
                             <div class="form-group row mt-1">
                                 <div class="col-sm-4 ">
+                                    <label for="newUniversitas" class="col-md col-form-label text-md-left">{{ __('Lulusan Universitas') }}</label>
+                                </div>
+                                <div class="col-sm-8 ">
+                                    <input id="newUniversitas" type="text" class="form-control @error('major') is-invalid @enderror" name="newUniversitas" value="{{$userData->universitas}}" required autocomplete="newUniversitas">
+
+                                    @error('major')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row mt-1">
+                                <div class="col-sm-4 ">
                                     <label for="newMajor" class="col-md col-form-label text-md-left">{{ __('Lulusan') }}</label>
                                 </div>
                                 <div class="col-sm-8 ">
