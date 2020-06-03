@@ -203,14 +203,72 @@ class PengajuanKerjasamaController extends Controller
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }
 
-    public function terimaKerjasama($id)
+    public function usulanJadwal(Request $request, $id)
     {
         $dataPengajuan = PengajuanKerjasama::find($id);
+        $dataPengajuan->status = "Menolak Jadwal Dari UPKK UB";
+        $dataPengajuan->info_status = "Pihak Perusahaan telah mengirimkan jadwal usulan baru";
+        $dataPengajuan->tgl_usulan = $request->tgl_usulan;
+        $dataPengajuan->alasan_usulan = $request->alasan_usulan;
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
+
+    public function terimaKerjasama(Request $request, $id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+
+        $dataPengajuan->tgl_tawaran = $request->tgl_tawaran;
+        $dataPengajuan->lokasi = $request->lokasi;
         $dataPengajuan->status = "Diterima";
         $dataPengajuan->info_status = "Menunggu konfirmasi oleh pihak Perusahaan dari jadwal yang telah diajukan oleh UPKK UB";
         $dataPengajuan->save();
 
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }
-    
+
+    public function terimaJadwal(Request $request, $id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+
+        $dataPengajuan->status = "Diterima";
+        $dataPengajuan->info_status = "Menunggu UPKK UB untuk mengunggah lowongan kerja sama";
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
+
+    public function terimaUsulan($id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+
+        $dataPengajuan->status = "Diterima";
+        $dataPengajuan->info_status = "Menunggu UPKK UB untuk mengunggah lowongan kerja sama";
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
+
+    public function tolakUsulan($id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+
+        $dataPengajuan->status = "Ditolak";
+        $dataPengajuan->info_status = "Usulan Jadwal baru ditolak UPKK, kerjasama dibatalkan";
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
+
+    public function unggahLowonganKerja($id)
+    {
+        $dataPengajuan = PengajuanKerjasama::find($id);
+
+        $dataPengajuan->status = "Berjalan";
+        $dataPengajuan->info_status = "Lowongan kerja telah diunggah, menunggu pelamar untuk mendaftar";
+        $dataPengajuan->save();
+
+        return redirect()->route('detailKerjasama', ['id' => $id]);
+    }
 }

@@ -6,7 +6,7 @@
                 <span class="sr-only">Toggle Menu</span>
             </button>
         </div>
-        <div class="p-4" style="height: 100vh;">
+        <div class="p-4" style="height: 200vh;">
             <h1><a href="index.html" class="logo">{{Auth::user()->name}} <span>{{Auth::user()->status}}</span></a></h1>
             @if (Auth::user()->status == "Pelamar")
             <ul class="list-unstyled components mb-5">

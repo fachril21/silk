@@ -141,6 +141,12 @@
     
 
 
+    <!-- http://www.silk.com#id -->
+
+    <owl:DatatypeProperty rdf:about="http://www.silk.com#id"/>
+    
+
+
     <!-- http://www.silk.com#informasi_pekerjaan -->
 
     <owl:DatatypeProperty rdf:about="http://www.silk.com#informasi_pekerjaan"/>
