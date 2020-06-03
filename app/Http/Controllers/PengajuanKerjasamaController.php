@@ -65,7 +65,7 @@ class PengajuanKerjasamaController extends Controller
 
     public function ajukanKerjasama(Request $request)
     {
-
+        $username = Auth::user()->username;
         $pengajuanKerjasama = new PengajuanKerjasama;
         $pengajuanKerjasama->id_user = Auth::user()->id;
         $pengajuanKerjasama->jenis_kerjasama = $request->jenisKerjasama;
@@ -101,6 +101,7 @@ class PengajuanKerjasamaController extends Controller
                 INSERT DATA
                     { 
                     silk:$id_kerjasama rdf:type silk:Lowongan_Kerja .
+                    <http://www.silk.com#$username> silk:mengadakan silk:$id_kerjasama .
                     silk:$id_kerjasama silk:id '$id_kerjasama' .
                     silk:$id_kerjasama silk:judul '$request->judul' .
                     silk:$id_kerjasama silk:gaji_jabatan '$request->gajiDitawarkan' .

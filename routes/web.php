@@ -60,6 +60,10 @@ Route::post('/konfirmasiJadwalUsulan/cancel/{id}', 'PengajuanKerjasamaController
 
 Route::post('/unggahLowonganKerja/{id}', 'PengajuanKerjasamaController@unggahLowonganKerja')->name('unggahLowonganKerja');
 
+Route::get('/daftarLowonganKerja/{id}', 'LowonganKerjaController@index')->name('daftarLowonganKerja');
+Route::get('/detailLowonganKerja/{id}', 'LowonganKerjaController@detailLowonganKerja')->name('detailLowonganKerja');
+
+
 
 // Route::get('userProfile/{user}',  ['as' => 'users.edit', 'uses' => 'UserProfileController@sendUserData']);
 // Route::patch('userProfile/{user}/update',  ['as' => 'users.update', 'uses' => 'UpdateProfileController@updateUserData']);

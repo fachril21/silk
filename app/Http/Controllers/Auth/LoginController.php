@@ -44,6 +44,10 @@ class LoginController extends Controller
     {
         if($user->status == "Perusahaan"){
             return redirect()->route('kerjasamaRekrutmen', ['id' => $user->id]);
+        }elseif($user->status == "Pelamar"){
+            return redirect()->route('daftarLowonganKerja', ['id' => $user->id]);
+        }elseif($user->status == "UPKK"){
+            return redirect()->route('kerjasamaRekrutmenUpkk');
         }
         return redirect('/home');
     }
