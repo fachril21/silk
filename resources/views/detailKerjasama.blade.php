@@ -27,6 +27,7 @@
 
                                     </div>
                                 </div>
+
                             </div>
 
 
@@ -229,6 +230,14 @@
                                         </div>
                                         <div class="row mt-1">
                                             <div class="col-sm-4 ">
+                                                <label for="waktu_tes" class="col-md col-form-label text-md-left">{{ __('Waktu Tes Rekrutmen') }}</label>
+                                            </div>
+                                            <div class="col-sm-8 ">
+                                                <label for="waktu_tes" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->waktu_tes_format}}</b></label>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-sm-4 ">
                                                 <label for="lokasi" class="col-md col-form-label text-md-left">{{ __('Lokasi Tes Rekrutmen') }}</label>
                                             </div>
                                             <div class="col-sm-8 ">
@@ -337,6 +346,21 @@
                                                 });
                                             </script>
                                             @error('date')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mt-1">
+                                        <div class="col-sm-4 ">
+                                            <label for="waktu_tes" class="col-md col-form-label text-md-left">{{ __('Waktu Mulai Tes') }}</label>
+                                        </div>
+                                        <div class="col-sm-8 ">
+                                            <input id="waktu_tes" type="time" class="form-control" name="waktu_tes" value="{{ old('waktu_tes') }}" required autocomplete="waktu_tes">
+                                            <!-- <input type="text" id="birth_date" name="birth_date"> -->
+
+                                            @error('waktu_tes')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

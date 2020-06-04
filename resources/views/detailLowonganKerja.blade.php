@@ -11,7 +11,14 @@
                             <span style="font-size: 20px;"><b>{{$dataKerjasama->judul}}</b></span>
                         </div>
                         <div class="col-sm-4">
-                            <a href="#"><button type="button" class="btn btn-primary btn-sm float-right waves-effect waves-light">Daftarkan Diri</button></a>
+                            @if($dataPendaftaran == null)
+                            <form id="daftarRekrutmen" action="{{route('daftarRekrutmen', ['id_user' => Auth::user()->id , 'id_lowongan' => $dataKerjasamaDB->id])}}" method="post">
+                                {{csrf_field()}}
+                                <button type="button" class="btn btn-primary btn-sm float-right" onclick="daftarRekrutmen()">Daftarkan Diri</button>
+                            </form>
+                            @else
+                            <span class="text-success">Anda sudah terdaftar pada rekrutmen lowongan kerja ini</span>
+                            @endif
                         </div>
                     </div>
                     <div class="mt-3">
@@ -77,6 +84,14 @@
                                 <label for="gaji" class="col-md col-form-label text-md-left"><b>Rp {{$dataKerjasama->gaji_jabatan}}</b></label>
                             </div>
                         </div>
+                        <div class="row mt-1">
+                            <div class="col-sm-4 ">
+                                <label for="tgl_tes_final" class="col-md col-form-label text-md-left">{{ __('Tanggal Tes Rekrutmen') }}</label>
+                            </div>
+                            <div class="col-sm-8 ">
+                                <label for="tgl_tes_final" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->tgl_tes_final}}</b></label>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -85,4 +100,20 @@
         </div>
     </div>
 </div>
+<script>
+    function daftarRekrutmen() {
+        swal({
+                title: "Konfirmasi Pendaftaran Rekrutmen",
+                text: "Apakah Anda yakin ingin mendaftarkan diri pada rekrutmen ini?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: false,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $('#daftarRekrutmen').submit();
+                }
+            });
+    }
+</script>
 @endsection

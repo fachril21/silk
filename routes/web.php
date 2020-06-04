@@ -62,7 +62,7 @@ Route::post('/unggahLowonganKerja/{id}', 'PengajuanKerjasamaController@unggahLow
 
 Route::get('/daftarLowonganKerja/{id}', 'LowonganKerjaController@index')->name('daftarLowonganKerja');
 Route::get('/detailLowonganKerja/{id}', 'LowonganKerjaController@detailLowonganKerja')->name('detailLowonganKerja');
-
+Route::post('/detailLowonganKerja/apply/{id_user}{id_lowongan}', 'PesertaRekrutmenController@daftarRekrutmen')->name('daftarRekrutmen');
 
 
 // Route::get('userProfile/{user}',  ['as' => 'users.edit', 'uses' => 'UserProfileController@sendUserData']);

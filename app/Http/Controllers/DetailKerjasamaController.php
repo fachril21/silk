@@ -45,7 +45,7 @@ class DetailKerjasamaController extends Controller
                 'informasi_pekerjaan' => $row->informasi_pekerjaan,
             ];
         }
-        
+
 
         $dataJenisKelamin = $obj->endpoint->query(
             "
@@ -90,6 +90,7 @@ class DetailKerjasamaController extends Controller
 
         $dataKerjasamaDB = DB::table('pengajuan_kerjasamas')
             ->where('id', $id)
+            ->select(DB::raw('*, TIME_FORMAT(pengajuan_kerjasamas.waktu_tes, "%H : %i") as waktu_tes_format'))
             ->first();
 
         return view('detailKerjasama', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian'));

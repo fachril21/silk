@@ -221,6 +221,7 @@ class PengajuanKerjasamaController extends Controller
         $dataPengajuan = PengajuanKerjasama::find($id);
 
         $dataPengajuan->tgl_tawaran = $request->tgl_tawaran;
+        $dataPengajuan->waktu_tes = $request->waktu_tes;
         $dataPengajuan->lokasi = $request->lokasi;
         $dataPengajuan->status = "Diterima";
         $dataPengajuan->info_status = "Menunggu konfirmasi oleh pihak Perusahaan dari jadwal yang telah diajukan oleh UPKK UB";
@@ -235,6 +236,7 @@ class PengajuanKerjasamaController extends Controller
 
         $dataPengajuan->status = "Diterima";
         $dataPengajuan->info_status = "Menunggu UPKK UB untuk mengunggah lowongan kerja sama";
+        $dataPengajuan->tgl_tes_final = $dataPengajuan->tgl_tawaran;
         $dataPengajuan->save();
 
         return redirect()->route('detailKerjasama', ['id' => $id]);
@@ -246,6 +248,7 @@ class PengajuanKerjasamaController extends Controller
 
         $dataPengajuan->status = "Diterima";
         $dataPengajuan->info_status = "Menunggu UPKK UB untuk mengunggah lowongan kerja sama";
+        $dataPengajuan->tgl_tes_final = $dataPengajuan->tgl_usulan;
         $dataPengajuan->save();
 
         return redirect()->route('detailKerjasama', ['id' => $id]);

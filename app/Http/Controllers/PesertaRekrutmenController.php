@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use EasyRdf_Sparql_Client;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\PesertaRekrutmen;
+
+class PesertaRekrutmenController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->endpoint = new EasyRdf_Sparql_Client(
+            'http://localhost:3030/silk/query',
+            'http://localhost:3030/silk/update'
+        );
+    }
+
+    public function daftarRekrutmen($id_user, $id_lowongan)
+    {
+        $pesertaRekrutmen = new PesertaRekrutmen;
+        $pesertaRekrutmen->id_user = $id_user;
+        $pesertaRekrutmen->id_lowongan = $id_lowongan;
+        $pesertaRekrutmen->status = "Terdaftar";
+        $pesertaRekrutmen->info_status = "Menunggu tes rekrutmen, mohon untuk konfirmasi kehadiran tes rekrutmen saat menjelang tes dimulai";
+
+        $pesertaRekrutmen->save();
+        
+        Alert::toast('Berhasil Terdaftar', 'Mohon untuk konfirmasi kehadiran tes rekrutmen saat menjelang tes dimulai');
+        return redirect()->route('detailLowonganKerja', ['id' => $id_lowongan]);
+    }
+}

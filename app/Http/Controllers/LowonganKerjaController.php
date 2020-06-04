@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use EasyRdf_Sparql_Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LowonganKerjaController extends Controller
@@ -142,7 +143,11 @@ class LowonganKerjaController extends Controller
             ->where('id', $id)
             ->first();
 
-        return view('detailLowonganKerja', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian'));
+        $dataPendaftaran = DB::table('peserta_rekrutmens')
+            ->where('id_user', Auth::user()->id)
+            ->where('id_lowongan', $id)
+            ->first();
+        return view('detailLowonganKerja', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian', 'dataPendaftaran'));
 
     }
 }
