@@ -41,7 +41,7 @@ class LowonganKerjaController extends Controller
             "
         );
         $dataStatus = DB::table('pengajuan_kerjasamas')
-            // ->where('status', 'Berjalan')
+            ->where('status', 'Berjalan')
             ->get();
 
         $dataLowonganKerjaView = array();
@@ -141,6 +141,7 @@ class LowonganKerjaController extends Controller
 
         $dataKerjasamaDB = DB::table('pengajuan_kerjasamas')
             ->where('id', $id)
+            ->select(DB::raw('*, TIME_FORMAT(pengajuan_kerjasamas.waktu_tes, "%H : %i") as waktu_tes_format'))
             ->first();
 
         $dataPendaftaran = DB::table('peserta_rekrutmens')

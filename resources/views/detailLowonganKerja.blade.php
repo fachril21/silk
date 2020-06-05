@@ -92,7 +92,22 @@
                                 <label for="tgl_tes_final" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->tgl_tes_final}}</b></label>
                             </div>
                         </div>
-
+                        <div class="row mt-1">
+                            <div class="col-sm-4 ">
+                                <label for="tgl_tes_final" class="col-md col-form-label text-md-left">{{ __('Waktu Tes Rekrutmen') }}</label>
+                            </div>
+                            <div class="col-sm-8 ">
+                                <label for="tgl_tes_final" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->waktu_tes_format}} WIB</b></label>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-sm-4 ">
+                                <label for="lokasi" class="col-md col-form-label text-md-left">{{ __('Lokasi Tes Rekrutmen') }}</label>
+                            </div>
+                            <div class="col-sm-8 ">
+                                <label for="lokasi" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->lokasi}} WIB</b></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

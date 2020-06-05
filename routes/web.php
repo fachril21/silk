@@ -46,9 +46,15 @@ Route::get('/pengajuanKerjasama', 'PengajuanKerjasamaController@index')->name('p
 Route::post('/pengajuanKerjasama/upload', 'PengajuanKerjasamaController@ajukanKerjasama');
 
 Route::get('/detailKerjasama/{id}', 'DetailKerjasamaController@index')->name('detailKerjasama');
+Route::get('/progresKerjasamaRekrutmen', 'ProgresKerjasamaRekrutmenController@index')->name('progresKerjasamaRekrutmen');
+Route::get('/progresKerjasamaRekrutmen/{id}', 'ProgresKerjasamaRekrutmenController@detailProgresKerjasama')->name('detailProgresKerjasama');
+Route::post('/progresKerjasamaRekrutmen/done/{id}', 'ProgresKerjasamaRekrutmenController@konfirmasiTesSelesai')->name('konfirmasiTesSelesai');
 
 
 Route::get('/kerjasamaRekrutmen', 'PengajuanKerjasamaController@showKerjaSamaUpkk')->name('kerjasamaRekrutmenUpkk');
+Route::get('/progresKerjasamaRekrutmenUpkk', 'ProgresKerjasamaRekrutmenController@indexUpkk')->name('progresKerjasamaRekrutmenUpkk');
+Route::post('/progresKerjasamaRekrutmenUpkk/confirm/{id}', 'ProgresKerjasamaRekrutmenController@konfirmasiKehadiranTes')->name('konfirmasiKehadiranTes');
+
 Route::post('/konfirmasiKerjasama/confirm/{id}', 'PengajuanKerjasamaController@terimaKerjasama')->name('terimaKerjasama');
 Route::post('/konfirmasiKerjasama/cancel/{id}', 'PengajuanKerjasamaController@tolakKerjasama')->name('tolakKerjasama');
 
@@ -63,6 +69,9 @@ Route::post('/unggahLowonganKerja/{id}', 'PengajuanKerjasamaController@unggahLow
 Route::get('/daftarLowonganKerja/{id}', 'LowonganKerjaController@index')->name('daftarLowonganKerja');
 Route::get('/detailLowonganKerja/{id}', 'LowonganKerjaController@detailLowonganKerja')->name('detailLowonganKerja');
 Route::post('/detailLowonganKerja/apply/{id_user}{id_lowongan}', 'PesertaRekrutmenController@daftarRekrutmen')->name('daftarRekrutmen');
+Route::get('/progresPesertaRekrutmen', 'ProgresPesertaRekrutmenController@index')->name('progresPesertaRekrutmen');
+Route::get('/progresPesertaRekrutmen/{id}', 'ProgresPesertaRekrutmenController@detailProgresPeserta')->name('detailProgresPeserta');
+Route::post('/progresPesertaRekrutmen/confirm/{id}', 'ProgresPesertaRekrutmenController@konfirmasiKehadiran')->name('konfirmasiKehadiran');
 
 
 // Route::get('userProfile/{user}',  ['as' => 'users.edit', 'uses' => 'UserProfileController@sendUserData']);

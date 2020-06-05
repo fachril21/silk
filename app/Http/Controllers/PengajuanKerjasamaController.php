@@ -69,6 +69,7 @@ class PengajuanKerjasamaController extends Controller
         $pengajuanKerjasama = new PengajuanKerjasama;
         $pengajuanKerjasama->id_user = Auth::user()->id;
         $pengajuanKerjasama->jenis_kerjasama = $request->jenisKerjasama;
+        $pengajuanKerjasama->nama_perusahaan = Auth::user()->name;
         $pengajuanKerjasama->judul = $request->judul;
         $pengajuanKerjasama->batas_usia = $request->batasUsia;
 

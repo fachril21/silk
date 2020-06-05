@@ -233,7 +233,7 @@
                                                 <label for="waktu_tes" class="col-md col-form-label text-md-left">{{ __('Waktu Tes Rekrutmen') }}</label>
                                             </div>
                                             <div class="col-sm-8 ">
-                                                <label for="waktu_tes" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->waktu_tes_format}}</b></label>
+                                                <label for="waktu_tes" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->waktu_tes_format}} WIB</b></label>
                                             </div>
                                         </div>
                                         <div class="row mt-1">
