@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LowonganKerja;
 use App\PengajuanKerjasama;
 use App\PesertaRekrutmen;
 use Illuminate\Http\Request;
@@ -98,7 +99,7 @@ class ProgresKerjasamaRekrutmenController extends Controller
         $peserta->save();
         
         Alert::toast('Berhasil melakukan konfirmasi kehadiran');
-        return redirect()->route('detailProgresKerjasama', ['id' => $id]);
+        return redirect()->route('detailProgresKerjasama', ['id' => $peserta->id_lowongan]);
     }
 
     public function konfirmasiTesSelesai($id)
@@ -106,6 +107,11 @@ class ProgresKerjasamaRekrutmenController extends Controller
         $kerjasama = PengajuanKerjasama::find($id);
         $kerjasama->status = "Menunggu Hasil Seleksi";
         $kerjasama->info_status = "Menunggu hasil seleksi yang dilakukan oleh pihak perusahaan";
+
+        $dataLowonganKerja = LowonganKerja::find($id);
+        $dataLowonganKerja->status = $kerjasama->status;
+        $dataLowonganKerja->info_status = $kerjasama->info_status;
+        $dataLowonganKerja->save();
 
         $daftarPeserta = DB::table('peserta_rekrutmens')
             ->where('peserta_rekrutmens.status', 'Akan Hadir Tes Rekrumen')
@@ -116,5 +122,23 @@ class ProgresKerjasamaRekrutmenController extends Controller
 
         Alert::toast('Tes Rekrutmen telah selesai, menunggu hasil seleksi');
         return redirect()->route('detailProgresKerjasama', ['id' => $id]);
+    }
+
+    public function terimaPeserta($id){
+        $peserta = PesertaRekrutmen::find($id);
+        $peserta->status = "Diterima";
+        $peserta->info_status = "Selamat Anda diterima pada proses rekrutmen ini. Anda akan dihubungi oleh pihak perusahaan";
+        $peserta->save();
+
+        return redirect()->route('detailProgresKerjasama', ['id' => $peserta->id_lowongan]);
+    }
+
+    public function tolakPeserta($id){
+        $peserta = PesertaRekrutmen::find($id);
+        $peserta->status = "Ditolak";
+        $peserta->info_status = "Maaf Anda ditolak pada proses rekrutmen ini.";
+        $peserta->save();
+
+        return redirect()->route('detailProgresKerjasama', ['id' => $peserta->id_lowongan]);
     }
 }

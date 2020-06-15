@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LowonganKerja;
 use Illuminate\Http\Request;
 use EasyRdf_Sparql_Client;
 use Illuminate\Support\Facades\Auth;
@@ -202,6 +203,19 @@ class PengajuanKerjasamaController extends Controller
         $dataPengajuan->status = "Ditolak";
         $dataPengajuan->save();
 
+        global $endpoint;
+        $obj = new PengajuanKerjasamaController();
+        $result = $obj->endpoint->update(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+                
+                INSERT DATA {
+                    <http://www.silk.com#$id> silk:status '$dataPengajuan->status' .
+                }
+            "
+        );
+
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }
 
@@ -240,6 +254,22 @@ class PengajuanKerjasamaController extends Controller
         $dataPengajuan->tgl_tes_final = $dataPengajuan->tgl_tawaran;
         $dataPengajuan->save();
 
+        $dataLowonganKerja = new LowonganKerja;
+        $dataLowonganKerja->id = $dataPengajuan->id;
+        $dataLowonganKerja->id_user_perusahaan = $dataPengajuan->id_user;
+        $dataLowonganKerja->nama_perusahaan = $dataPengajuan->nama_perusahaan;
+        $dataLowonganKerja->jenis_kerjasama = $dataPengajuan->jenis_kerjasama;
+        $dataLowonganKerja->judul = $dataPengajuan->judul;
+        $dataLowonganKerja->batas_usia = $dataPengajuan->batas_usia;
+        $dataLowonganKerja->jenis_kelamin_laki_laki = $dataPengajuan->jenis_kelamin_laki_laki;
+        $dataLowonganKerja->jenis_kelamin_perempuan = $dataPengajuan->jenis_kelamin_perempuan;
+        $dataLowonganKerja->tgl_tes = $dataPengajuan->tgl_tes_final;
+        $dataLowonganKerja->waktu_tes = $dataPengajuan->waktu_tes;
+        $dataLowonganKerja->lokasi = $dataPengajuan->lokasi;
+        $dataLowonganKerja->status = $dataPengajuan->status;
+        $dataLowonganKerja->info_status = $dataPengajuan->info_status;
+        $dataLowonganKerja->save();
+
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }
 
@@ -252,6 +282,22 @@ class PengajuanKerjasamaController extends Controller
         $dataPengajuan->tgl_tes_final = $dataPengajuan->tgl_usulan;
         $dataPengajuan->save();
 
+        $dataLowonganKerja = new LowonganKerja;
+        $dataLowonganKerja->id = $dataPengajuan->id;
+        $dataLowonganKerja->id_user_perusahaan = $dataPengajuan->id_user;
+        $dataLowonganKerja->nama_perusahaan = $dataPengajuan->nama_perusahaan;
+        $dataLowonganKerja->jenis_kerjasama = $dataPengajuan->jenis_kerjasama;
+        $dataLowonganKerja->judul = $dataPengajuan->judul;
+        $dataLowonganKerja->batas_usia = $dataPengajuan->batas_usia;
+        $dataLowonganKerja->jenis_kelamin_laki_laki = $dataPengajuan->jenis_kelamin_laki_laki;
+        $dataLowonganKerja->jenis_kelamin_perempuan = $dataPengajuan->jenis_kelamin_perempuan;
+        $dataLowonganKerja->tgl_tes = $dataPengajuan->tgl_tes_final;
+        $dataLowonganKerja->waktu_tes = $dataPengajuan->waktu_tes;
+        $dataLowonganKerja->lokasi = $dataPengajuan->lokasi;
+        $dataLowonganKerja->status = $dataPengajuan->status;
+        $dataLowonganKerja->info_status = $dataPengajuan->info_status;
+        $dataLowonganKerja->save();
+
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }
 
@@ -263,6 +309,19 @@ class PengajuanKerjasamaController extends Controller
         $dataPengajuan->info_status = "Usulan Jadwal baru ditolak UPKK, kerjasama dibatalkan";
         $dataPengajuan->save();
 
+        global $endpoint;
+        $obj = new PengajuanKerjasamaController();
+        $result = $obj->endpoint->update(
+            "
+                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX silk: <http://www.silk.com#>
+                
+                INSERT DATA {
+                    <http://www.silk.com#$id> silk:status '$dataPengajuan->status' .
+                }
+            "
+        );
+
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }
 
@@ -273,6 +332,11 @@ class PengajuanKerjasamaController extends Controller
         $dataPengajuan->status = "Berjalan";
         $dataPengajuan->info_status = "Lowongan kerja telah diunggah, menunggu pelamar untuk mendaftar";
         $dataPengajuan->save();
+
+        $dataLowonganKerja = LowonganKerja::find($id);
+        $dataLowonganKerja->status = $dataPengajuan->status;
+        $dataLowonganKerja->info_status = $dataPengajuan->info_status;
+        $dataLowonganKerja->save();
 
         return redirect()->route('detailKerjasama', ['id' => $id]);
     }

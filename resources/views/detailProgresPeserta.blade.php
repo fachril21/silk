@@ -12,7 +12,7 @@
                     <div class="alert alert-primary" role="alert">
                         @elseif($detailProgresRekrutmen->status == "Diterima")
                         <div class="alert alert-success" role="alert">
-                            @elseif($detailProgresRekrutmen->status == "Tidak Diterima" || $detailProgresRekrutmen->status == "Tidak Hadir Tes")
+                            @elseif($detailProgresRekrutmen->status == "Ditolak" || $detailProgresRekrutmen->status == "Tidak Hadir Tes")
                             <div class="alert alert-danger" role="alert">
                                 @endif
                                 <div class="row mt-1">

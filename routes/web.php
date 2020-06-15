@@ -49,6 +49,9 @@ Route::get('/detailKerjasama/{id}', 'DetailKerjasamaController@index')->name('de
 Route::get('/progresKerjasamaRekrutmen', 'ProgresKerjasamaRekrutmenController@index')->name('progresKerjasamaRekrutmen');
 Route::get('/progresKerjasamaRekrutmen/{id}', 'ProgresKerjasamaRekrutmenController@detailProgresKerjasama')->name('detailProgresKerjasama');
 Route::post('/progresKerjasamaRekrutmen/done/{id}', 'ProgresKerjasamaRekrutmenController@konfirmasiTesSelesai')->name('konfirmasiTesSelesai');
+Route::post('/progresKerjasamaRekrutmen/accept/{id}', 'ProgresKerjasamaRekrutmenController@terimaPeserta')->name('terimaPeserta');
+Route::post('/progresKerjasamaRekrutmen/reject/{id}', 'ProgresKerjasamaRekrutmenController@tolakPeserta')->name('tolakPeserta');
+
 
 
 Route::get('/kerjasamaRekrutmen', 'PengajuanKerjasamaController@showKerjaSamaUpkk')->name('kerjasamaRekrutmenUpkk');
@@ -68,7 +71,7 @@ Route::post('/unggahLowonganKerja/{id}', 'PengajuanKerjasamaController@unggahLow
 
 Route::get('/daftarLowonganKerja/{id}', 'LowonganKerjaController@index')->name('daftarLowonganKerja');
 Route::get('/detailLowonganKerja/{id}', 'LowonganKerjaController@detailLowonganKerja')->name('detailLowonganKerja');
-Route::post('/detailLowonganKerja/apply/{id_user}{id_lowongan}', 'PesertaRekrutmenController@daftarRekrutmen')->name('daftarRekrutmen');
+Route::post('/detailLowonganKerja/apply/{id_user}/{id_lowongan}', 'PesertaRekrutmenController@daftarRekrutmen')->name('daftarRekrutmen');
 Route::get('/progresPesertaRekrutmen', 'ProgresPesertaRekrutmenController@index')->name('progresPesertaRekrutmen');
 Route::get('/progresPesertaRekrutmen/{id}', 'ProgresPesertaRekrutmenController@detailProgresPeserta')->name('detailProgresPeserta');
 Route::post('/progresPesertaRekrutmen/confirm/{id}', 'ProgresPesertaRekrutmenController@konfirmasiKehadiran')->name('konfirmasiKehadiran');

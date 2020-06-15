@@ -108,15 +108,15 @@
                                                 <td>
                                                     @if($row->status == "Telah Menjalani Tes Rekrutmen")
                                                     <div class="row justify-content-center">
-                                                        <form id="daftarRekrutmen" action="" method="post">
+                                                        <form id="tolakPeserta" action="{{route('tolakPeserta', ['id' => $row->id])}}" method="post">
                                                             {{csrf_field()}}
-                                                            <button type="button" style="width: 100px;" class="btn btn-danger btn-sm float-right" onclick="daftarRekrutmen()">Tolak</button>
+                                                            <button type="button" style="width: 100px;" class="btn btn-danger btn-sm float-right" onclick="tolakPeserta()">Tolak</button>
                                                         </form>
                                                     </div>
                                                     <div class="row mt-1 justify-content-center">
-                                                        <form id="daftarRekrutmen" action="" method="post">
+                                                        <form id="terimaPeserta" action="{{route('terimaPeserta', ['id' => $row->id])}}" method="post">
                                                             {{csrf_field()}}
-                                                            <button type="button" style="width: 100px;" class="btn btn-primary btn-sm float-right" onclick="daftarRekrutmen()">Terima</button>
+                                                            <button type="button" style="width: 100px;" class="btn btn-primary btn-sm float-right" onclick="terimaPeserta()">Terima</button>
                                                         </form>
                                                     </div>
                                                     @endif
@@ -174,6 +174,36 @@
                                                 .then((willDelete) => {
                                                     if (willDelete) {
                                                         $('#konfirmasiKehadiranPeserta').submit();
+                                                    }
+                                                });
+                                        }
+
+                                        function tolakPeserta() {
+                                            swal({
+                                                    title: "Konfirmasi Untuk Menolak Pelamar",
+                                                    text: "Apakah Anda yakin ingin menolak pelamar pada rekrutmen ini?",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: false,
+                                                })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        $('#tolakPeserta').submit();
+                                                    }
+                                                });
+                                        }
+
+                                        function terimaPeserta() {
+                                            swal({
+                                                    title: "Konfirmasi Untuk Menerima Pelamar",
+                                                    text: "Apakah Anda yakin ingin menerima pelamar pada rekrutmen ini?",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: false,
+                                                })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        $('#terimaPeserta').submit();
                                                     }
                                                 });
                                         }
