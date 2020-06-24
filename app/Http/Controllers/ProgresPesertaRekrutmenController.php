@@ -20,7 +20,7 @@ class ProgresPesertaRekrutmenController extends Controller
             'http://localhost:3030/silk/update'
         );
     }
-
+    
     public function index()
     {
         $progresRekrutmen = DB::table('peserta_rekrutmens')
@@ -70,14 +70,18 @@ class ProgresPesertaRekrutmenController extends Controller
 
     public function konfirmasiKehadiran($id)
     {
-        $progresPeserta = AppPesertaRekrutmen::find($id);
-        $progresPeserta->status = "Akan Hadir Tes Rekrumen";
-        $progresPeserta->info_status = "Dimohon hadir pada lokasi tes 30 menit sebelum tes dimulai";
-        $progresPeserta->save();
-
-        Alert::toast('Berhasil Konfirmasi Kehadiran Tes Rekrutmen', 'Dimohon hadir pada lokasi tes 30 menit sebelum tes dimulai');
-
-        return redirect()->route('detailProgresPeserta', ['id' => $id]);
-
+        $checkDB = \App\Helper\Helper::instance()->checkDBConnection();
+        if($checkDB == true){
+            $progresPeserta = AppPesertaRekrutmen::find($id);
+            $progresPeserta->status = "Akan Hadir Tes Rekrumen";
+            $progresPeserta->info_status = "Dimohon hadir pada lokasi tes 30 menit sebelum tes dimulai";
+            $progresPeserta->save();
+    
+            Alert::toast('Berhasil Konfirmasi Kehadiran Tes Rekrutmen', 'Dimohon hadir pada lokasi tes 30 menit sebelum tes dimulai');
+    
+            return redirect()->route('detailProgresPeserta', ['id' => $id]);
+        }else{
+            Alert::error('Gagal Koneksi', 'Koneksi DB gagal');
+        }
     }
 }

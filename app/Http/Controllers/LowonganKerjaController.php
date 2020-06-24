@@ -148,7 +148,12 @@ class LowonganKerjaController extends Controller
             ->where('id_user', Auth::user()->id)
             ->where('id_lowongan', $id)
             ->first();
-        return view('detailLowonganKerja', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian', 'dataPendaftaran'));
+
+        $dataPerusahaan = DB::table('pengajuan_kerjasamas')
+            ->join('users', 'pengajuan_kerjasamas.id_user', '=', 'users.id')
+            ->where('pengajuan_kerjasamas.id', $id)
+            ->first();
+        return view('detailLowonganKerja', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian', 'dataPendaftaran', 'dataPerusahaan'));
 
     }
 }

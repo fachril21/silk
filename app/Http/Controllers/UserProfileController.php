@@ -165,6 +165,7 @@ class UserProfileController extends Controller
 
         $user = Auth::user();
         $user->name = $newName;
+        $user->phone = $newPhone;
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],

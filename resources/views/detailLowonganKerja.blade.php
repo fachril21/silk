@@ -2,6 +2,39 @@
 @section('content')
 @include('layouts.sidebar')
 <div class="container pt-4">
+    @if($dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Luar Kampus")
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="alert alert-primary" role="alert">
+                <b>Untuk mendaftar lowongan kerja ini, silahkan menghubungi Perusahaan pada email atau nomor telepon yang tertera. Karena lowongan kerja ini bersifat Rekrutmen Luar Kampus.</b> 
+                <div class="row mt-1">
+                    <div class="col-sm-4 ">
+                        <label for="nama_perusahaan" class="col-md col-form-label text-md-left">{{ __('Perusahaan') }}</label>
+                    </div>
+                    <div class="col-sm-8 ">
+                        <label for="nama_perusahaan" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->nama_perusahaan}}</b></label>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-sm-4 ">
+                        <label for="email" class="col-md col-form-label text-md-left">{{ __('Email') }}</label>
+                    </div>
+                    <div class="col-sm-8 ">
+                        <label for="email" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->email}}</b></label>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-sm-4 ">
+                        <label for="nomor_telepon" class="col-md col-form-label text-md-left">{{ __('Nomor Telepon') }}</label>
+                    </div>
+                    <div class="col-sm-8 ">
+                        <label for="nomor_telepon" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->phone}}</b></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card shadow p-3 mb-5 bg-white rounded border-0">
@@ -11,13 +44,15 @@
                             <span style="font-size: 20px;"><b>{{$dataKerjasama->judul}}</b></span>
                         </div>
                         <div class="col-sm-4">
-                            @if($dataPendaftaran == null)
+                            @if($dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Dalam Kampus")
+                            @if($dataPendaftaran == null )
                             <form id="daftarRekrutmen" action="{{route('daftarRekrutmen', ['id_user' => Auth::user()->id , 'id_lowongan' => $dataKerjasamaDB->id])}}" method="post">
                                 {{csrf_field()}}
                                 <button type="button" class="btn btn-primary btn-sm float-right" onclick="daftarRekrutmen()">Daftarkan Diri</button>
                             </form>
                             @else
                             <span class="text-success">Anda sudah terdaftar pada rekrutmen lowongan kerja ini</span>
+                            @endif
                             @endif
                         </div>
                     </div>
@@ -84,6 +119,7 @@
                                 <label for="gaji" class="col-md col-form-label text-md-left"><b>Rp {{$dataKerjasama->gaji_jabatan}}</b></label>
                             </div>
                         </div>
+                        @if($dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Dalam Kampus")
                         <div class="row mt-1">
                             <div class="col-sm-4 ">
                                 <label for="tgl_tes_final" class="col-md col-form-label text-md-left">{{ __('Tanggal Tes Rekrutmen') }}</label>
@@ -106,6 +142,32 @@
                             </div>
                             <div class="col-sm-8 ">
                                 <label for="lokasi" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->lokasi}} WIB</b></label>
+                            </div>
+                        </div>
+                        @endif
+                        <hr>
+                        <div class="row mt-1">
+                            <div class="col-sm-4 ">
+                                <label for="nama_perusahaan" class="col-md col-form-label text-md-left">{{ __('Perusahaan') }}</label>
+                            </div>
+                            <div class="col-sm-8 ">
+                                <label for="nama_perusahaan" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->nama_perusahaan}}</b></label>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-sm-4 ">
+                                <label for="email" class="col-md col-form-label text-md-left">{{ __('Email') }}</label>
+                            </div>
+                            <div class="col-sm-8 ">
+                                <label for="email" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->email}}</b></label>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-sm-4 ">
+                                <label for="nomor_telepon" class="col-md col-form-label text-md-left">{{ __('Nomor Telepon') }}</label>
+                            </div>
+                            <div class="col-sm-8 ">
+                                <label for="nomor_telepon" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->phone}}</b></label>
                             </div>
                         </div>
                     </div>

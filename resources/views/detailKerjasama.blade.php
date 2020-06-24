@@ -53,6 +53,14 @@
                                         </div>
                                         <div class="row mt-5">
                                             <div class="col-sm-4 ">
+                                                <label for="jenis_kerjasama" class="col-md col-form-label text-md-left">{{ __('Jenis Kerjasama Rekrutmen') }}</label>
+                                            </div>
+                                            <div class="col-sm-8 ">
+                                                <label for="jenis_kerjasama" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->jenis_kerjasama}}</b></label>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-sm-4 ">
                                                 <label for="batas_usia" class="col-md col-form-label text-md-left">{{ __('Batas usia maksimal') }}</label>
                                             </div>
                                             <div class="col-sm-8 ">
@@ -121,12 +129,37 @@
                                             <div class="col-sm-8 ">
                                                 <label for="judul" style="font-size: 20px;" class="col-md col-form-label text-md-left"><b>{{$dataKerjasama->judul}}</b></label>
                                             </div>
-                                            @if(Auth::user()->status == "UPKK" && $dataKerjasamaDB->info_status == "Menunggu UPKK UB untuk mengunggah lowongan kerja sama")
-                                            <form class="col-sm-4" id="unggahLowonganKerja" action="{{route('unggahLowonganKerja', ['id' => $dataKerjasamaDB->id])}}" method="post">
-                                                {{csrf_field()}}
-                                                <button type="button" class="btn btn-success btn-sm float-right" onclick="unggahLowonganKerja()">Unggah Lowongan Kerja</button>
-                                            </form>
+                                            @if((Auth::user()->status == "UPKK" && $dataKerjasamaDB->info_status == "Menunggu UPKK UB untuk mengunggah lowongan kerja sama" && $dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Dalam Kampus") || ($dataKerjasamaDB->status == "Diajukan" && $dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Luar Kampus"))
+                                            <div class="col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <form id="unggahLowonganKerja" action="{{route('unggahLowonganKerja', ['id' => $dataKerjasamaDB->id])}}" method="post">
+                                                            {{csrf_field()}}
+                                                            <button type="button" style="width: 100%;" class="btn btn-success btn-sm float-right" onclick="unggahLowonganKerja()">Unggah Lowongan Kerja</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                @if($dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Luar Kampus")
+                                                <div class="row mt-1">
+                                                    <div class="col-sm">
+                                                        
+                                                        <form id="tolakKerjasama" action="{{route('tolakKerjasama', ['id' => $dataKerjasamaDB->id])}}" method="post">
+                                                            {{csrf_field()}}
+                                                            <button type="button" style="width: 100%;" class="btn btn-danger btn-sm" style="width: 100px;" onclick="tolakKerjasama()">Tolak Lowongan Kerja</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                            </div>
                                             @endif
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-sm-4 ">
+                                                <label for="jenis_kerjasama" class="col-md col-form-label text-md-left">{{ __('Jenis Kerjasama Rekrutmen') }}</label>
+                                            </div>
+                                            <div class="col-sm-8 ">
+                                                <label for="jenis_kerjasama" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->jenis_kerjasama}}</b></label>
+                                            </div>
                                         </div>
                                         <div class="row mt-5">
                                             <div class="col-sm-4 ">
@@ -191,7 +224,7 @@
                                             </div>
                                         </div>
 
-                                        @if($dataKerjasamaDB->status == "Diajukan")
+                                        @if($dataKerjasamaDB->status == "Diajukan" && $dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Dalam Kampus")
                                         <div class="row mt-3 float-right">
                                             <div class="col-sm-4 mx-2">
                                                 <form id="tolakKerjasama" action="{{route('tolakKerjasama', ['id' => $dataKerjasamaDB->id])}}" method="post">
@@ -208,7 +241,7 @@
                                     @endif
                                 </div>
                             </div>
-                            @if((Auth::user()->status == "Perusahaan" || Auth::user()->status == "UPKK") && ($dataKerjasamaDB->status == "Diterima" || $dataKerjasamaDB->status == "Menolak Jadwal Dari UPKK UB" || $dataKerjasamaDB->status == "Berjalan"))
+                            @if((Auth::user()->status == "Perusahaan" || Auth::user()->status == "UPKK") && $dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Dalam Kampus" && ($dataKerjasamaDB->status == "Diterima" || $dataKerjasamaDB->status == "Menolak Jadwal Dari UPKK UB" || $dataKerjasamaDB->status == "Berjalan"))
                             <div class="card my-2">
                                 <div class="card-header">Jadwal yang ditawarkan pihak UPKK UB</div>
 
@@ -262,7 +295,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if((Auth::user()->status == "Perusahaan" || Auth::user()->status == "UPKK") && ($dataKerjasamaDB->status == "Menolak Jadwal Dari UPKK UB" || $dataKerjasamaDB->info_status == "Menunggu UPKK UB untuk mengunggah lowongan kerja sama" || $dataKerjasamaDB->status == "Berjalan"))
+                            @if((Auth::user()->status == "Perusahaan" || Auth::user()->status == "UPKK") && $dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Dalam Kampus" && ($dataKerjasamaDB->status == "Menolak Jadwal Dari UPKK UB" || $dataKerjasamaDB->info_status == "Menunggu UPKK UB untuk mengunggah lowongan kerja sama" || $dataKerjasamaDB->status == "Berjalan"))
                             <div class="card my-2">
                                 <div class="card-header">Jadwal yang diusulkan kembali oleh pihak Perusahaan</div>
 

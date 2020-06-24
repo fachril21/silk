@@ -22,6 +22,7 @@ class ProgresKerjasamaRekrutmenController extends Controller
         );
     }
 
+    
     public function index()
     {
         $progresRekrutmen = DB::table('peserta_rekrutmens')
