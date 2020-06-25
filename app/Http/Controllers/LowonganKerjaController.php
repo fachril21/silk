@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use EasyRdf_Sparql_Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LowonganKerjaController extends Controller
 {
@@ -23,6 +25,16 @@ class LowonganKerjaController extends Controller
         //
         // BELUM DITAMBAH FILTER SESUAI PROFILE PELAMAR
         //
+
+        $username = Auth::user()->username;
+        $birth_date = Auth::user()->birth_date;
+        $dob = new DateTime($birth_date);
+        $today = new DateTime('today');
+        $usia = 21;
+        // Alert::success('Success Title', $usia);
+
+
+
         global $endpoint;
         $obj = new PengajuanKerjasamaController();
         $dataLowonganKerja = $obj->endpoint->query(
@@ -32,15 +44,25 @@ class LowonganKerjaController extends Controller
 
                 SELECT ?id ?judul ?nama_perusahaan ?jabatan ?gaji_jabatan
                 WHERE {
+
+                    <http://www.silk.com#$username> silk:mengambil ?jurusan .
+                    <http://www.silk.com#$username> silk:menguasai ?keahlian .
+                    <http://www.silk.com#$username> silk:jenis_kelamin ?jenis_kelamin .
+                    
   					?instanceLowonganKerja rdf:type silk:Lowongan_Kerja . ?instanceLowonganKerja silk:judul ?judul .
   					?instanceLowonganKerja silk:id ?id .
                     ?instancePerusahaan rdf:type silk:Perusahaan . ?instancePerusahaan silk:mengadakan ?instanceLowonganKerja . 
   					?instancePerusahaan silk:nama_perusahaan ?nama_perusahaan . 
-                    ?instanceLowonganKerja silk:jabatan ?jabatan . ?instanceLowonganKerja silk:gaji_jabatan ?gaji_jabatan . 
+                    ?instanceLowonganKerja silk:jabatan ?jabatan . ?instanceLowonganKerja silk:gaji_jabatan ?gaji_jabatan .
+
+                    ?instanceLowonganKerja silk:membutuhkan ?jurusan . ?instanceLowonganKerja silk:membutuhkan ?keahlian . ?instanceLowonganKerja silk:jenis_kelamin ?jenis_kelamin .
+
+                    ?instanceLowonganKerja silk:batas_usia ?usia .
+	                FILTER (?usia >= '$usia') .
                 }
             "
         );
-        $dataStatus = DB::table('pengajuan_kerjasamas')
+        $dataStatus = DB::table('lowongan_kerjas')
             ->where('status', 'Berjalan')
             ->get();
 
@@ -96,7 +118,7 @@ class LowonganKerjaController extends Controller
                 'informasi_pekerjaan' => $row->informasi_pekerjaan,
             ];
         }
-        
+
 
         $dataJenisKelamin = $obj->endpoint->query(
             "
@@ -154,6 +176,5 @@ class LowonganKerjaController extends Controller
             ->where('pengajuan_kerjasamas.id', $id)
             ->first();
         return view('detailLowonganKerja', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian', 'dataPendaftaran', 'dataPerusahaan'));
-
     }
 }

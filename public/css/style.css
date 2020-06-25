@@ -8368,4 +8368,9 @@ a[data-toggle="collapse"] {
     opacity: 0;
     border-radius: 5px;
 }
+
+.notif{
+   width: 24px;
+   height: 24px;
+}
   

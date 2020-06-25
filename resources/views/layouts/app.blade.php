@@ -84,7 +84,7 @@
                         @else
                         <li class="nav-item dropdown mx-3">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-lg text-danger"></i>
+                                <img src="{{ asset('images/notifOff.png') }}" alt="" class="notif" >
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">Action</a>

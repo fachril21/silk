@@ -24,8 +24,8 @@
                                         <label for="jenisKerjasama" class="col-md col-form-label text-md-left">{{ __('Jenis Kerjasama') }}</label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <select class="custom-select" id="jenisKerjasama" name="jenisKerjasama">
-                                            <option selected disabled>Pilih jenis kerjasama</option>
+                                        <select class="custom-select" id="jenisKerjasama" name="jenisKerjasama" required>
+                                            <option selected disabled value="">Pilih jenis kerjasama</option>
                                             <option value="Rekrutmen Dalam Kampus">Rekrutmen Dalam Kampus</option>
                                             <option value="Rekrutmen Luar Kampus">Rekrutmen Luar Kampus</option>
                                         </select>

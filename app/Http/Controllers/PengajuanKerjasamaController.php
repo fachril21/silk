@@ -69,6 +69,9 @@ class PengajuanKerjasamaController extends Controller
     public function ajukanKerjasama(Request $request)
     {
         $checkDB = \App\Helper\Helper::instance()->checkDBConnection();
+
+        
+
         if ($checkDB == true) {
             $username = Auth::user()->username;
             $pengajuanKerjasama = new PengajuanKerjasama;

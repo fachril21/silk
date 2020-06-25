@@ -150,6 +150,7 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'birth_date' => $data['birth_date'],
                 'email' => $data['email'],
+                'phone' => $data['phone'],
                 'password' => Hash::make($data['password']),
             ]);
             if (isset($data['avatar'])) {
@@ -325,6 +326,7 @@ class RegisterController extends Controller
                 'username' => $data['username'],
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'phone' => $data['phone'],
                 'password' => Hash::make($data['password']),
             ]);
             if (isset($data['avatar'])) {
