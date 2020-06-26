@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="alert alert-primary" role="alert">
-                <b>Untuk mendaftar lowongan kerja ini, silahkan menghubungi Perusahaan pada email atau nomor telepon yang tertera. Karena lowongan kerja ini bersifat Rekrutmen Luar Kampus.</b> 
+                <b>Untuk mendaftar lowongan kerja ini, silahkan menghubungi Perusahaan atau langsung mengirimkan lamaran anda (CV, Portofolio, dll) pada email atau nomor telepon yang tertera. Karena lowongan kerja ini bersifat Rekrutmen Luar Kampus.</b> 
                 <div class="row mt-1">
                     <div class="col-sm-4 ">
                         <label for="nama_perusahaan" class="col-md col-form-label text-md-left">{{ __('Perusahaan') }}</label>
@@ -151,7 +151,7 @@
                                 <label for="nama_perusahaan" class="col-md col-form-label text-md-left">{{ __('Perusahaan') }}</label>
                             </div>
                             <div class="col-sm-8 ">
-                                <label for="nama_perusahaan" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->nama_perusahaan}}</b></label>
+                                <a href="{{route('profile.perusahaan', ['username' => $dataPerusahaan->username])}}"><span for="nama_perusahaan" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->nama_perusahaan}}</b></span></a>
                             </div>
                         </div>
                         <div class="row mt-1">

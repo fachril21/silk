@@ -11,8 +11,9 @@ $(document).ready(function() {
         if (x < max_fields) {
             x++; //input field increment
             //add input field
+            
             $(wrapper).append(
-                '<div><input id="skill" list="dataKeahlian" type="text" class="form-control mt-2" name="skill[]" required autocomplete="skill" /><datalist id="dataKeahlian"> @foreach($dataKeahlian as $row) <option value="{{$row->skill}}"> @endforeach  </datalist> <a href="javascript:void(0);" class="remove_field">Remove</a></div>'
+                '<div> <input id="skill" list="dataKeahlian" type="text" class="form-control mt-2" name="skill[]" required autocomplete="skill" /><datalist id="dataKeahlian"> @foreach($dataKeahlian as $row) <option value="{{$row->skill}}"> @endforeach  </datalist> <a href="javascript:void(0);" class="remove_field">Remove</a></div>'
             );
         }
     });
@@ -70,7 +71,7 @@ $(function() {
             x++; //input field increment
             //add input field
             $(wrapper).append(
-                '<div><input id="newSkill" type="text" class="form-control mt-2" name="newSkill[]" required autocomplete="newSkill" /> <a href="javascript:void(0);" class="remove_field">Remove</a></div>'
+                '<div><input id="newSkill" list="dataKeahlian" type="text" class="form-control mt-2" name="newSkill[]" required autocomplete="newSkill" /> <a href="javascript:void(0);" class="remove_field">Remove</a></div>'
             );
         }
     });

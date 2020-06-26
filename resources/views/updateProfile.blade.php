@@ -20,12 +20,12 @@
                     @endif
 
                     <img class="rounded mx-auto d-block" src="{{Auth::user()->getFirstMediaUrl('avatars', 'thumb')}}" alt="{{Auth::user()->getFirstMediaUrl('avatars', 'thumb')}}" height="86" width="86">
-                    
+
                     <div class="mt-5">
                         <form method="POST" action="/profile/update">
                             @csrf
                             {{ csrf_field() }}
-                            
+
                             <div class="form-group row mt-1">
                                 <div class="col-sm-4 ">
                                     <label for="name" class="col-md col-form-label text-md-left">{{ __('Nama') }}</label>
@@ -89,8 +89,13 @@
                                     <label for="newUniversitas" class="col-md col-form-label text-md-left">{{ __('Lulusan Universitas') }}</label>
                                 </div>
                                 <div class="col-sm-8 ">
-                                    <input id="newUniversitas" type="text" class="form-control @error('major') is-invalid @enderror" name="newUniversitas" value="{{$userData->universitas}}" required autocomplete="newUniversitas">
+                                    <input id="newUniversitas" list="dataUniversitas" type="text" class="form-control @error('major') is-invalid @enderror" name="newUniversitas" value="{{$userData->universitas}}" required autocomplete="newUniversitas">
 
+                                    <datalist id="dataUniversitas">
+                                        @foreach($dataUniversitas as $row)
+                                        <option value="{{$row->universitas}}">
+                                            @endforeach
+                                    </datalist>
                                     @error('major')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -103,8 +108,12 @@
                                     <label for="newMajor" class="col-md col-form-label text-md-left">{{ __('Lulusan') }}</label>
                                 </div>
                                 <div class="col-sm-8 ">
-                                    <input id="newMajor" type="text" class="form-control @error('major') is-invalid @enderror" name="newMajor" value="{{$userData->jurusan}}" required autocomplete="newMajor">
-
+                                    <input id="newMajor" list="dataJurusan" type="text" class="form-control @error('major') is-invalid @enderror" name="newMajor" value="{{$userData->jurusan}}" required autocomplete="newMajor">
+                                    <datalist id="dataJurusan">
+                                        @foreach($dataJurusan as $row)
+                                        <option value="{{$row->jurusan}}">
+                                            @endforeach
+                                    </datalist>
                                     @error('major')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -119,10 +128,17 @@
                                 <div class="col-sm-8 ">
                                     <div class="wrapper_updateSkill">
                                         @foreach($userDataSkill as $row)
-                                        <div><input id="newSkill" type="text" class="form-control @error('skill') is-invalid @enderror" name="newSkill[]" value="{{$row->skill}}" required autocomplete="newSkill" /><a href="javascript:void(0);" class="remove_field">Remove</a></div>
+                                        <div>
+                                            <input id="newSkill" list="dataKeahlian" type="text" class="form-control @error('skill') is-invalid @enderror" name="newSkill[]" value="{{$row->skill}}" required autocomplete="newSkill" /><a href="javascript:void(0);" class="remove_field">Remove</a>
+                                            <datalist id="dataKeahlian">
+                                                @foreach($dataKeahlian as $row)
+                                                <option value="{{$row->skill}}">
+                                                    @endforeach
+                                            </datalist>
+                                        </div>
                                         @endforeach
                                     </div>
-                                    <p><button class="add_fields_updateSkill">Add More Fields</button></p>
+                                    <p><button class="add_fields_updateSkill btn btn-primary btn-sm mt-1">Tambah Keahlian</button></p>
                                 </div>
                             </div>
                             <div class="form-group row mt-1">
@@ -135,7 +151,7 @@
                                         <div><input id="newAchievment" type="text" class="form-control @error('skill') is-invalid @enderror" name="newAchievment[]" value="{{$row->pencapaian}}" required autocomplete="newAchievment" /><a href="javascript:void(0);" class="remove_field">Remove</a></div>
                                         @endforeach
                                     </div>
-                                    <p><button class="add_fields_updateAch">Add More Fields</button></p>
+                                    <p><button class="add_fields_updateAch btn btn-primary btn-sm mt-1">Tambah Pencapaian</button></p>
                                 </div>
                             </div>
                             <div class="form-group row mt-3 float-right">

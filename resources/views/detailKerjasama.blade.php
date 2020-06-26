@@ -27,7 +27,6 @@
 
                                     </div>
                                 </div>
-
                             </div>
 
 
@@ -57,6 +56,14 @@
                                             </div>
                                             <div class="col-sm-8 ">
                                                 <label for="jenis_kerjasama" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->jenis_kerjasama}}</b></label>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-sm-4 ">
+                                                <label for="nama_perusahaan" class="col-md col-form-label text-md-left">{{ __('Nama Perusahaan') }}</label>
+                                            </div>
+                                            <div class="col-sm-8 ">
+                                                <a href="{{route('profile.perusahaan', ['username' => $dataPerusahaan->username])}}"><span for="nama_perusahaan" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->name}}</b></span></a>
                                             </div>
                                         </div>
                                         <div class="row mt-5">
@@ -142,7 +149,7 @@
                                                 @if($dataKerjasamaDB->jenis_kerjasama == "Rekrutmen Luar Kampus")
                                                 <div class="row mt-1">
                                                     <div class="col-sm">
-                                                        
+
                                                         <form id="tolakKerjasama" action="{{route('tolakKerjasama', ['id' => $dataKerjasamaDB->id])}}" method="post">
                                                             {{csrf_field()}}
                                                             <button type="button" style="width: 100%;" class="btn btn-danger btn-sm" style="width: 100px;" onclick="tolakKerjasama()">Tolak Lowongan Kerja</button>
@@ -159,6 +166,15 @@
                                             </div>
                                             <div class="col-sm-8 ">
                                                 <label for="jenis_kerjasama" class="col-md col-form-label text-md-left"><b>{{$dataKerjasamaDB->jenis_kerjasama}}</b></label>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-sm-4 ">
+                                                <label for="nama_perusahaan" class="col-md col-form-label text-md-left">{{ __('Nama Perusahaan') }}</label>
+                                            </div>
+                                            <div class="col-sm-8 ">
+                                                <a href="{{route('profile.perusahaan', ['username' => $dataPerusahaan->username])}}"><span for="nama_perusahaan" class="col-md col-form-label text-md-left"><b>{{$dataPerusahaan->name}}</b></span></a>
+
                                             </div>
                                         </div>
                                         <div class="row mt-5">

@@ -34,7 +34,7 @@ class PengajuanKerjasamaController extends Controller
 
                 SELECT ?jurusan
                 WHERE {
-                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceJurusan silk:nama_jurusan ?jurusan .
+                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceJurusan silk:nama ?jurusan .
                 }
             "
         );
@@ -99,6 +99,8 @@ class PengajuanKerjasamaController extends Controller
             $pengajuanKerjasama->save();
 
             $id_kerjasama = $pengajuanKerjasama->id;
+            $posisiString = $request->posisi;
+            $posisi = str_replace(' ', '_', $posisiString);
 
             global $endpoint;
             $obj = new PengajuanKerjasamaController();
@@ -115,6 +117,8 @@ class PengajuanKerjasamaController extends Controller
                     silk:$id_kerjasama silk:judul '$request->judul' .
                     silk:$id_kerjasama silk:gaji_jabatan '$request->gajiDitawarkan' .
                     silk:$id_kerjasama silk:batas_usia '$request->batasUsia' .
+                    silk:$id_kerjasama silk:menawarkan silk:$posisi .
+                    silk:$id_kerjasama silk:membutuhkan silk:$posisi .
                     silk:$id_kerjasama silk:jabatan '$request->posisi' .
                     silk:$id_kerjasama silk:informasi_pekerjaan '$request->informasiPosisi' .       
                     }     

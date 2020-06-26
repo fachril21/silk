@@ -30,8 +30,7 @@ class LowonganKerjaController extends Controller
         $birth_date = Auth::user()->birth_date;
         $dob = new DateTime($birth_date);
         $today = new DateTime('today');
-        $usia = 21;
-        // Alert::success('Success Title', $usia);
+        $usia = $dob->diff($today)->y;
 
 
 
@@ -42,7 +41,7 @@ class LowonganKerjaController extends Controller
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                 PREFIX silk: <http://www.silk.com#>
 
-                SELECT ?id ?judul ?nama_perusahaan ?jabatan ?gaji_jabatan
+                SELECT DISTINCT ?id ?judul ?username ?nama_perusahaan ?jabatan ?gaji_jabatan
                 WHERE {
 
                     <http://www.silk.com#$username> silk:mengambil ?jurusan .
@@ -52,7 +51,7 @@ class LowonganKerjaController extends Controller
   					?instanceLowonganKerja rdf:type silk:Lowongan_Kerja . ?instanceLowonganKerja silk:judul ?judul .
   					?instanceLowonganKerja silk:id ?id .
                     ?instancePerusahaan rdf:type silk:Perusahaan . ?instancePerusahaan silk:mengadakan ?instanceLowonganKerja . 
-  					?instancePerusahaan silk:nama_perusahaan ?nama_perusahaan . 
+  					?instancePerusahaan silk:nama ?nama_perusahaan . ?instancePerusahaan silk:username ?username .
                     ?instanceLowonganKerja silk:jabatan ?jabatan . ?instanceLowonganKerja silk:gaji_jabatan ?gaji_jabatan .
 
                     ?instanceLowonganKerja silk:membutuhkan ?jurusan . ?instanceLowonganKerja silk:membutuhkan ?keahlian . ?instanceLowonganKerja silk:jenis_kelamin ?jenis_kelamin .
@@ -74,6 +73,7 @@ class LowonganKerjaController extends Controller
                 if ($rowStatus->id == $id_rdf) {
                     $dataLowonganKerjaObj = (object) [
                         'id' => $rowStatus->id,
+                        'username' => $rowData->username->getValue(),
                         'judul' => $rowData->judul->getValue(),
                         'status' => $rowStatus->status,
                         'nama_perusahaan' => $rowData->nama_perusahaan->getValue(),
@@ -141,7 +141,7 @@ class LowonganKerjaController extends Controller
                 SELECT ?jurusan
                 WHERE {
                     ?instanceLoker rdf:type silk:Lowongan_Kerja . ?instanceLoker silk:id ?id . 
-                    ?instanceLoker silk:membutuhkan ?instanceJurusan . ?instanceJurusan silk:nama_jurusan ?jurusan
+                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceLoker silk:membutuhkan ?instanceJurusan . ?instanceJurusan silk:nama ?jurusan
                     FILTER regex(?id, '$id')
                 }
             "
@@ -155,7 +155,7 @@ class LowonganKerjaController extends Controller
                 SELECT ?keahlian
                 WHERE {
                     ?instanceLoker rdf:type silk:Lowongan_Kerja . ?instanceLoker silk:id ?id . 
-                    ?instanceLoker silk:membutuhkan ?instanceKeahlian . ?instanceKeahlian silk:nama ?keahlian
+                    ?instanceKeahlian rdf:type silk:Keahlian . ?instanceLoker silk:membutuhkan ?instanceKeahlian . ?instanceKeahlian silk:nama ?keahlian
                     FILTER regex(?id, '$id')
                 }
             "

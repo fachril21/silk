@@ -34,7 +34,7 @@ class PerusahaanProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             SELECT ?username ?name ?phone ?email ?information
-            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:nama_perusahaan ?name . ?instance silk:no_telepon_perusahaan ?phone .
+            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:nama ?name . ?instance silk:no_telepon ?phone .
                 ?instance silk:email ?email . ?instance silk:informasi_perusahaan ?information .
 	            FILTER regex(?username, '$username')}
             "
@@ -65,7 +65,7 @@ class PerusahaanProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             SELECT ?username ?name ?phone ?email ?information
-            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:nama_perusahaan ?name . ?instance silk:no_telepon_perusahaan ?phone .
+            WHERE {?instance rdf:type silk:Perusahaan . ?instance silk:username ?username . ?instance silk:nama ?name . ?instance silk:no_telepon ?phone .
                 ?instance silk:email ?email . ?instance silk:informasi_perusahaan ?information .
 	            FILTER regex(?username, '$username')}
             "
@@ -120,15 +120,15 @@ class PerusahaanProfileController extends Controller
             PREFIX silk: <http://www.silk.com#>
 
             DELETE DATA{
-                <http://www.silk.com#$username> silk:nama_perusahaan '$oldName' .
-                <http://www.silk.com#$username> silk:no_telepon_perusahaan '$oldPhone' .
+                <http://www.silk.com#$username> silk:nama '$oldName' .
+                <http://www.silk.com#$username> silk:no_telepon '$oldPhone' .
                 <http://www.silk.com#$username> silk:informasi_perusahaan '$oldInformasi' .
                 
             };
 
             INSERT DATA{
-                <http://www.silk.com#$username> silk:nama_perusahaan '$newName' .
-                <http://www.silk.com#$username> silk:no_telepon_perusahaan '$newPhone' .
+                <http://www.silk.com#$username> silk:nama '$newName' .
+                <http://www.silk.com#$username> silk:no_telepon '$newPhone' .
                 <http://www.silk.com#$username> silk:informasi_perusahaan '$newInformasi' .
                 
             }

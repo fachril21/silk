@@ -17,7 +17,7 @@
                                     <span style="font-size: 16px;"><b>{{$row->judul}}</b></span>
                                 </div>
                                 <div class="row">
-                                    <span>{{$row->nama_perusahaan}}</span>
+                                    <a href="{{route('profile.perusahaan', ['username' => $row->username])}}"><span>{{$row->nama_perusahaan}}</span></a>
                                 </div>
                                 <div class="row">
                                     <span>{{$row->jabatan}}</span>

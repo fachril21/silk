@@ -90,6 +90,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Nama Peserta</th>
+                                                <th>Nomor Telepon</th>
+                                                <th>Email</th>
                                                 <th>Status Peserta</th>
                                                 @if($detailProgresRekrutmen->status == "Menunggu Hasil Seleksi")
                                                 <th>Action</th>
@@ -102,7 +104,9 @@
                                         <tbody>
                                             @foreach($daftarPeserta as $row)
                                             <tr>
-                                                <td><b>{{$row->nama_peserta}}</b></td>
+                                                <td><a href="{{route('profile', ['username' => $row->username_peserta])}}"><b>{{$row->nama_peserta}}</b></a></td>
+                                                <td>{{$row->no_telepon}}</td>
+                                                <td>{{$row->email}}</td>
                                                 <td>{{$row->status}}</td>
                                                 @if($detailProgresRekrutmen->status == "Menunggu Hasil Seleksi")
                                                 <td>
@@ -125,7 +129,7 @@
                                                 @if(Auth::user()->status == "UPKK")
                                                 <td>
                                                     <div class="row justify-content-center">
-                                                        @if($row->status != "Telah Menjalani Tes Rekrutmen")
+                                                        @if($row->status != "Telah Menjalani Tes Rekrutmen" && $row->status != "Diterima" && $row->status != "Ditolak")
                                                         <form id="konfirmasiKehadiranPeserta" action="{{route('konfirmasiKehadiranTes', ['id' => $row->id])}}" method="post">
                                                             {{csrf_field()}}
                                                             <button type="button" class="btn btn-primary btn-sm float-right" onclick="konfirmasiKehadiranPeserta()">Konfirmasi Kehadiran Tes</button>

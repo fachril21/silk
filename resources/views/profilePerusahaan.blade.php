@@ -2,12 +2,14 @@
 
 @section('content')
 <div class="container">
-<div class="row">
+<div class="row my-5">
         <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                @if(Auth::user()->username == $userData->username)
                 <a class="nav-link" id="v-pills-change-email-tab" data-toggle="pill" href="#v-pills-change-email" role="tab" aria-controls="v-pills-change-email" aria-selected="false">Change Email</a>
                 <a class="nav-link" id="v-pills-change-password-tab" data-toggle="pill" href="#v-pills-change-password" role="tab" aria-controls="v-pills-change-password" aria-selected="false">Change Password</a>
+                @endif
             </div>
         </div>
         <div class="col-9">
@@ -17,10 +19,13 @@
                         <div class="col-md">
                             <div class="card">
                                 <div class="card-header">
+                                    
                                     <b>Profile</b>
+                                    @if(Auth::user()->username == $userData->username)
                                     <a href="/profilePerusahaan/edit/{{ Auth::user()->id }}">
                                         <button type="button" class="btn btn-link float-right">Edit Profile</button>
                                     </a>
+                                    @endif
                                 </div>
 
                                 <div class="card-body">
@@ -29,8 +34,9 @@
                                         {{ session('status') }}
                                     </div>
                                     @endif
-
+                                    @if(Auth::user()->username == $userData->username)
                                     <img class="rounded mx-auto d-block" src="{{Auth::user()->getFirstMediaUrl('avatars', 'thumb')}}" alt="{{Auth::user()->getFirstMediaUrl('avatars', 'thumb')}}" height="86" width="86">
+                                    @endif
 
                                     <div class="mt-5">
                                         <div class="row">

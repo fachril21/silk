@@ -68,7 +68,7 @@ class DetailKerjasamaController extends Controller
                 SELECT ?jurusan
                 WHERE {
                     ?instanceLoker rdf:type silk:Lowongan_Kerja . ?instanceLoker silk:id ?id . 
-                    ?instanceLoker silk:membutuhkan ?instanceJurusan . ?instanceJurusan silk:nama_jurusan ?jurusan
+                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceLoker silk:membutuhkan ?instanceJurusan . ?instanceJurusan silk:nama ?jurusan
                     FILTER regex(?id, '$id')
                 }
             "
@@ -82,7 +82,7 @@ class DetailKerjasamaController extends Controller
                 SELECT ?keahlian
                 WHERE {
                     ?instanceLoker rdf:type silk:Lowongan_Kerja . ?instanceLoker silk:id ?id . 
-                    ?instanceLoker silk:membutuhkan ?instanceKeahlian . ?instanceKeahlian silk:nama ?keahlian
+                    ?instanceKeahlian rdf:type silk:Keahlian . ?instanceLoker silk:membutuhkan ?instanceKeahlian . ?instanceKeahlian silk:nama ?keahlian
                     FILTER regex(?id, '$id')
                 }
             "
@@ -92,7 +92,11 @@ class DetailKerjasamaController extends Controller
             ->where('id', $id)
             ->select(DB::raw('*, TIME_FORMAT(pengajuan_kerjasamas.waktu_tes, "%H : %i") as waktu_tes_format'))
             ->first();
+        $dataPerusahaan = DB::table('users')
+            ->join('pengajuan_kerjasamas', 'pengajuan_kerjasamas.id_user', '=', 'users.id')
+            ->where('pengajuan_kerjasamas.id', $id)
+            ->first();
 
-        return view('detailKerjasama', compact('dataKerjasama', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian'));
+        return view('detailKerjasama', compact('dataKerjasama', 'dataPerusahaan', 'dataKerjasamaDB', 'dataJenisKelamin', 'dataJurusan', 'dataKeahlian'));
     }
 }

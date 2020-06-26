@@ -208,7 +208,7 @@
                                     </datalist>
                                 </div>
                             </div>
-                            <p><button class="add_fields">Add More Fields</button></p>
+                            <p><button class="add_fields btn btn-primary btn-sm mt-1">Tambah Keahlian</button></p>
                         </div>
 
                         @error('skill')
@@ -225,7 +225,7 @@
                             <div class="wrapper_achievment">
                                 <div><input id="achievment" type="text" class="form-control " name="achievment[]" value="{{ old('achievment') }}" required autocomplete="achievment" /></div>
                             </div>
-                            <p><button class="add_fields_ach">Add More Fields Achievment</button></p>
+                            <p><button class="add_fields_ach btn btn-primary btn-sm mt-1">Tambah Pencapaian</button></p>
 
                         </div>
 
@@ -235,8 +235,15 @@
                         </span>
                         @enderror
                     </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6">
+                            <div class="alert alert-primary" role="alert">
+                                <span>Pencapaian bisa berisi suatu hasil atau suatu kegiatan yang pernah dilakukan. Contoh: Berpartisipasi dalam pengembangan sistem X ; Mengikuti pelatihan dan mendapatkan sertifikat Y.</span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mt-3">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                         <div class="col-md-6">
@@ -280,7 +287,7 @@
 </div>
 
 <div class="modal fade" id="registrasiPerusahaanModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Registrasi Perusahaan</h5>

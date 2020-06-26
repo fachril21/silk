@@ -93,7 +93,7 @@ class RegisterController extends Controller
 
                 SELECT ?jurusan
                 WHERE {
-                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceJurusan silk:nama_jurusan ?jurusan .
+                    ?instanceJurusan rdf:type silk:Jurusan . ?instanceJurusan silk:nama ?jurusan .
                 }
             "
         );
@@ -167,9 +167,9 @@ class RegisterController extends Controller
                 INSERT DATA
                     { 
                     silk:$username rdf:type silk:Pelamar .
-                    silk:$username silk:nama_pelamar '$name' .
+                    silk:$username silk:nama '$name' .
                     silk:$username silk:username '$username' .
-                    silk:$username silk:no_telepon_pelamar '$phone' .
+                    silk:$username silk:no_telepon '$phone' .
                     silk:$username silk:email '$email' .      
                     silk:$username silk:jenis_kelamin '$gender' .      
                     silk:$username silk:tanggal_lahir '$birth_date' .      
@@ -235,7 +235,7 @@ class RegisterController extends Controller
                         INSERT DATA
                         { 
                             silk:$major rdf:type silk:Jurusan .   
-                            silk:$major silk:nama_jurusan '$major_name' .
+                            silk:$major silk:nama '$major_name' .
                             silk:$username silk:mengambil silk:$major .   
                         }
     
@@ -344,8 +344,8 @@ class RegisterController extends Controller
                     { 
                     silk:$username rdf:type silk:Perusahaan .
                     silk:$username silk:username '$username' .
-                    silk:$username silk:nama_perusahaan '$name' .
-                    silk:$username silk:no_telepon_perusahaan '$phone' .
+                    silk:$username silk:nama '$name' .
+                    silk:$username silk:no_telepon '$phone' .
                     silk:$username silk:email '$email' .    
                     silk:$username silk:informasi_perusahaan '$information' .  
                          

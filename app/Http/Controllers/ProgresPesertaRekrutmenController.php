@@ -26,18 +26,23 @@ class ProgresPesertaRekrutmenController extends Controller
         $progresRekrutmen = DB::table('peserta_rekrutmens')
             ->join('pengajuan_kerjasamas', 'peserta_rekrutmens.id_lowongan', '=', 'pengajuan_kerjasamas.id')
             ->join('users', 'peserta_rekrutmens.id_user', '=', 'users.id')
+            ->join(DB::raw('(SELECT * FROM users WHERE users.status = "Perusahaan") AS users_perusahaan'), 'pengajuan_kerjasamas.id_user', '=', 'users_perusahaan.id')
             ->select('peserta_rekrutmens.id as id', 
                         'peserta_rekrutmens.id_user as id_user', 
                         'peserta_rekrutmens.id_lowongan as id_lowongan',
                         'pengajuan_kerjasamas.judul as judul', 
+                        'pengajuan_kerjasamas.id_user as id_perusahaan', 
                         'pengajuan_kerjasamas.nama_perusahaan as nama_perusahaan', 
                         'pengajuan_kerjasamas.lokasi as lokasi', 
                         'pengajuan_kerjasamas.tgl_tes_final as tgl_tes_final', 
                         DB::raw('TIME_FORMAT(pengajuan_kerjasamas.waktu_tes, "%H : %i") as waktu_tes'), 
                         'peserta_rekrutmens.status as status', 
-                        'peserta_rekrutmens.info_status as info_status')
+                        'peserta_rekrutmens.info_status as info_status',
+                        'users_perusahaan.username as username_perusahaan'
+                        )
             ->where('peserta_rekrutmens.id_user', Auth::user()->id)
             ->get();
+        
 
         // $test = DB::table('peserta_rekrutmens')
         //     ->join('pengajuan_kerjasamas', 'peserta_rekrutmens.id_lowongan', '=', 'pengajuan_kerjasamas.id')
