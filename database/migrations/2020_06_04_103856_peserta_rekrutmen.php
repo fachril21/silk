@@ -17,9 +17,9 @@ class PesertaRekrutmen extends Migration
             $table->id()->autoIncrement();
             $table->bigInteger('id_user');
             $table->bigInteger('id_lowongan');
-            $table->boolean('konfirmasi_kehadiran');
+            $table->boolean('konfirmasi_kehadiran')->nullable();
             $table->string('status');
-            $table->string('info_status');
+            $table->string('info_status')->nullable();
             $table->timestamps();
         });
     }

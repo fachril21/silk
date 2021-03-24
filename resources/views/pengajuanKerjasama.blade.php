@@ -55,8 +55,8 @@
                                         <label for="batasUsia" class="col-md col-form-label text-md-left">{{ __('Batas Usia Maksimal') }}</label>
                                     </div>
                                     <div class="col-sm-8 ">
-                                        <select class="custom-select" id="batasUsia" name="batasUsia">
-                                            <option selected disabled>Pilih batas usia maksimal</option>
+                                        <select class="custom-select" id="batasUsia" name="batasUsia" required>
+                                            <option selected disabled value="">Pilih batas usia maksimal</option>
                                             @for($i=17 ; $i<=35 ; $i++) <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
                                         </select>
@@ -106,7 +106,7 @@
                                                 </datalist>
                                             </div>
                                         </div>
-                                        <p><button class="add_fields_lulusanPelamar">Add More Fields</button></p>
+                                        <p><button class="add_fields_lulusanPelamar btn btn-primary btn-sm mt-1">Tambah Jurusan yang dibutuhkan</button></p>
                                     </div>
 
                                     @error('skill')
@@ -148,7 +148,7 @@
                                                 </datalist>
                                             </div>
                                         </div>
-                                        <p><button class="add_fields_skillPengajuan">Add More Fields</button></p>
+                                        <p><button class="add_fields_skillPengajuan btn btn-primary btn-sm mt-1">Tambah Keahlian yang dibutuhkan</button></p>
                                     </div>
 
                                     @error('skill')

@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\DB;
+use mysqli;
 
 class Helper
 {
@@ -13,10 +14,12 @@ class Helper
     public function checkDBConnection()
     {
         try {
-            DB::connection()->getPdo();
+            $conn = new mysqli('127.0.0.1', 'root', '');
+            // DB::connection()->getPdo();
             return true;
         } catch (\Exception $e) {
-            die("Could not open connection to database server.  Please check your configuration.");
+            return false;
         }
     }
+
 }

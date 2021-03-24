@@ -252,6 +252,8 @@ class UserProfileController extends Controller
 
         foreach ($oldSkill as $row) {
             $skill = $row->skill;
+            $skillString = var_dump($row);
+            $skillValue = str_replace(' ', '_', $skillString);
             global $endpoint;
             $obj = new UserProfileController();
             $result = $obj->endpoint->update(
@@ -260,23 +262,7 @@ class UserProfileController extends Controller
                 PREFIX silk: <http://www.silk.com#>
 
                 DELETE DATA{
-                    <http://www.silk.com#$username> silk:menguasai <http://www.silk.com#$skill>
-                }
-                "
-            );
-        }
-
-        foreach ($oldSkill as $row) {
-            $skill = $row->skill;
-            global $endpoint;
-            $obj = new UserProfileController();
-            $result = $obj->endpoint->update(
-                "
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX silk: <http://www.silk.com#>
-
-                DELETE DATA{
-                    <http://www.silk.com#$username> silk:menguasai <http://www.silk.com#$skill>
+                    <http://www.silk.com#$username> silk:menguasai <http://www.silk.com#$skillValue>
                 }
                 "
             );

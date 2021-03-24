@@ -50,6 +50,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \Illuminate\Database\QueryException) {
+            
+            return response()->view('error.errorView');
+        } elseif ($exception instanceof \PDOException) {
+            return response()->view('error.errorView');
+
+        }
+
         return parent::render($request, $exception);
     }
 }

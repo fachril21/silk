@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use EasyRdf_Sparql_Client;
 use Illuminate\Support\Facades\Auth;
 use App\PengajuanKerjasama;
+use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -68,11 +69,7 @@ class PengajuanKerjasamaController extends Controller
 
     public function ajukanKerjasama(Request $request)
     {
-        $checkDB = \App\Helper\Helper::instance()->checkDBConnection();
-
-        
-
-        if ($checkDB == true) {
+        try {
             $username = Auth::user()->username;
             $pengajuanKerjasama = new PengajuanKerjasama;
             $pengajuanKerjasama->id_user = Auth::user()->id;
@@ -191,9 +188,12 @@ class PengajuanKerjasamaController extends Controller
             }
 
             return redirect()->route('kerjasamaRekrutmen', ['id' => Auth::user()->id]);
-        } else {
-            Alert::error('Gagal Koneksi', 'Koneksi DB gagal');
-        }
+        } catch (\PDOException $e) {
+            return response()->view('error.errorView');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->view('error.errorView');
+        } 
+        
     }
 
     public function showKerjaSama($id)

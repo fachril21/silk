@@ -200,7 +200,7 @@
                         <div class="col-md-6">
                             <div class="wrapper">
                                 <div>
-                                    <input id="skill" list="dataKeahlian" type="text" class="form-control @error('skill') is-invalid @enderror" name="skill[]" value="{{ old('skill') }}" required autocomplete="skill" />
+                                    <input id="skill" list="dataKeahlian" type="text" class="form-control @error('skill') is-invalid @enderror" name="skill[]" required autocomplete="skill" />
                                     <datalist id="dataKeahlian">
                                         @foreach($dataKeahlian as $row)
                                         <option value="{{$row->skill}}">
